@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glut.h>
+#include <math.h>
 
 // Declaração de variáveis globais
 GLfloat angle = 0;
@@ -71,7 +72,7 @@ void Desenha(void)
 	glRotatef(angle,0.0f,0.0f,1.0f);
 	glTranslatef(0.0f,0.0f,0.0f);
 
-	glColor3f(0.0f,1.0f,0.0f);
+	glColor3f(1.0f,1.0f,1.0f);
 	DesenhaNave();
       
 	// Executa os comandos OpenGL 
@@ -124,7 +125,7 @@ void Anima(int value)
 	if((Ty+maxY) > windowYmax) {
 		Ty = -range;
 	}
-	if((Ty+minY) < windowYmin ) {
+	if((Ty+minY) < windowYmin) {
 		Ty = +range;
 	}
 
@@ -146,9 +147,12 @@ void Anima(int value)
 }
 
 // Função callback chamada para gerenciar eventos de teclas especiais
-void TeclasEspeciais(int key, int x, int y)
-{                                                
+void TeclasEspeciais(int key, int x, int y) {
 	glutPostRedisplay();
+}
+
+double convertDegreesToRadians(double degrees) {
+	return ((2*M_PI * degrees) / 360); 
 }
 
 // Função callback chamada para gerenciar eventos de teclas
@@ -160,23 +164,27 @@ void Teclado (unsigned char key, int x, int y)
 	switch (key) {
 		case 'w':
 		case 'W':
-			// Lógica para mover para cima
-			xStep += 0.02f;
+			// Lógica para mover para "cima"
+			xStep = +cos(convertDegreesToRadians(angle + 90)) * 0.02f;
+			yStep = +sin(convertDegreesToRadians(angle + 90)) * 0.02f;
 			break;
 		case 'a':
 		case 'A':
 			// Lógica para mover para a esquerda
 			angle-=5;
+			printf("%lf\n", angle);
 			break;
 		case 's':
 		case 'S':
-			// Lógica para mover para baixo
-			xStep -= 0.02f;
+			// Lógica para mover para "baixo"
+			xStep = -cos(convertDegreesToRadians(angle + 90)) * 0.02f;
+			yStep = -sin(convertDegreesToRadians(angle + 90)) * 0.02f;
 			break;
 		case 'd':
 		case 'D':
 			// Lógica para mover para a direita
 			angle+=5;
+			printf("%lf\n", angle);
 			break;
 	}
 }
@@ -184,17 +192,17 @@ void Teclado (unsigned char key, int x, int y)
 // Função responsável por inicializar par�metros e variáveis
 void Inicializa (void)
 {   
-	// Define a cor de fundo da janela de visualização como branca
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	// Define a cor de fundo da janela de visualização
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
   // Inicialização das variáveis globais
 	xStep = yStep = 0.00f;
 	Tx = Ty = 0.0f;
 
-	minX = -15.0f;
-	maxX = +15.0f;
-	minY = -15.0f;
-	maxY = +17.0f;
+	minX = -10.0f;
+	maxX = +10.0f;
+	minY = -10.0f;
+	maxY = +10.0f;
 	windowXmin = windowYmin = -40.0f;
 	windowXmax = windowYmax = +40.0f;
     
@@ -208,7 +216,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);  
 	glutInitWindowPosition(5,5);     
 	glutInitWindowSize(450,450);  
-	glutCreateWindow("Desenho de objeto modelado com transformacoes"); 
+	glutCreateWindow("Asteroides"); 
  
 	// Registra a função callback de redesenho da janela de visualização
 	glutDisplayFunc(Desenha);  
