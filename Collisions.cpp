@@ -7,18 +7,16 @@
 #include <GL/glut.h>
 #include <math.h>
 
-// Declaração de variáveis globais
-GLfloat angle = 0;
-GLfloat velocity = 0;
-
 GLfloat tx = 0;
 GLfloat win = 25;
 
-// Variáveis que guardam a translação que será aplicada sobre a casinha
+// Declaração de variáveis globais
+GLfloat angle = 0;
+// Variáveis que guardam a translação que será aplicada sobre a nave
 GLfloat Tx;
 GLfloat Ty;
 
-// Variáveis que guardam os valores mínimos de x e y da casinha
+// Variáveis que guardam os valores mínimos de x e y da nave
 GLfloat minX, maxX;
 GLfloat minY, maxY;
 
@@ -31,13 +29,10 @@ GLfloat yStep;
 GLfloat windowXmin, windowXmax;
 GLfloat windowYmin, windowYmax;
 
-// Posição do objeto
-
-
 // Variáveis de referência do plano cartesiano
 int range = 25;
 
-// Função para desenhar uma Nave
+// Função para desenhar uma nave
 void DesenhaNave()
 {
 	glLineWidth(2);
@@ -45,6 +40,22 @@ void DesenhaNave()
 		glVertex2f(0.0,1.5);
 		glVertex2f(1.0,-1.0);
 		glVertex2f(-1.0,-1.0);
+	glEnd();
+	glPointSize(1);
+	glBegin(GL_POINTS);
+		glVertex2i(0,0);      
+	glEnd();
+}
+
+// Função para desenhar um obstáculo
+void DesenhaObstaculo()
+{
+	glLineWidth(2);
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(+1.0,+1.0);
+		glVertex2f(+1.0,-1.0);
+		glVertex2f(-1.0,-1.0);
+		glVertex2f(-1.0,+1.0);
 	glEnd();
 	glPointSize(1);
 	glBegin(GL_POINTS);
@@ -64,9 +75,9 @@ void Desenha(void)
 	// Limpa a janela de visualização com a cor de fundo definida previamente
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	// Aplica uma translação sobre a casinha
+	// Aplica uma translação sobre a Nave
 	glTranslatef(Tx, Ty, 0.0f);
-                
+
 	// Desenha Nave
 	glTranslatef(0.0f,0.0f,0.0f);
 	glRotatef(angle,0.0f,0.0f,1.0f);
@@ -74,7 +85,17 @@ void Desenha(void)
 
 	glColor3f(1.0f,1.0f,1.0f);
 	DesenhaNave();
-      
+
+	// Inicializa a matriz de transformação corrente
+	glLoadIdentity();
+	gluOrtho2D(-range, range, -range, range);
+
+	// Desenha obstáculo
+	glTranslatef(10.0f, 10.0f, 0.0f);
+
+	glColor3f(1.0f,1.0f,1.0f);
+	DesenhaObstaculo();
+
 	// Executa os comandos OpenGL 
 	glutSwapBuffers();
 }
@@ -113,7 +134,7 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 // Função callback chamada pela GLUT a cada intervalo de tempo
 void Anima(int value)
 {
-	// Muda a direção quando chega na borda esquerda ou direita
+	// Muda a posição quando chega na borda esquerda e direita
 	if((Tx+maxX) > windowXmax) {
 		Tx = -range;
 	}
@@ -121,7 +142,7 @@ void Anima(int value)
 		Tx = +range;
 	}
 
-	// Muda a direção quando chega na borda superior ou inferior
+	// Muda a posição quando chega na borda superior e inferior
 	if((Ty+maxY) > windowYmax) {
 		Ty = -range;
 	}
@@ -129,11 +150,11 @@ void Anima(int value)
 		Ty = +range;
 	}
 
-	// Move a casinha
+	// Move a Nave
 	Tx += xStep;
 	Ty += yStep;
 
-	// Redesenha a casinha em outra posição
+	// Redesenha a Nave em outra posição
 	glutPostRedisplay();
 
 	// Parâmetros:
@@ -165,26 +186,24 @@ void Teclado (unsigned char key, int x, int y)
 		case 'w':
 		case 'W':
 			// Lógica para mover para "cima"
-			xStep = +cos(convertDegreesToRadians(angle + 90)) * 0.02f;
-			yStep = +sin(convertDegreesToRadians(angle + 90)) * 0.02f;
+			xStep += +cos(convertDegreesToRadians(angle + 90)) * 0.001f;
+			yStep += +sin(convertDegreesToRadians(angle + 90)) * 0.001f;
 			break;
 		case 'a':
 		case 'A':
 			// Lógica para mover para a esquerda
-			angle-=5;
-			printf("%lf\n", angle);
+			angle+=5;
 			break;
 		case 's':
 		case 'S':
 			// Lógica para mover para "baixo"
-			xStep = -cos(convertDegreesToRadians(angle + 90)) * 0.02f;
-			yStep = -sin(convertDegreesToRadians(angle + 90)) * 0.02f;
+			xStep += -cos(convertDegreesToRadians(angle + 90)) * 0.001f;
+			yStep += -sin(convertDegreesToRadians(angle + 90)) * 0.001f;
 			break;
 		case 'd':
 		case 'D':
 			// Lógica para mover para a direita
-			angle+=5;
-			printf("%lf\n", angle);
+			angle-=5;
 			break;
 	}
 }
