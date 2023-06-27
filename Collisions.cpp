@@ -30,6 +30,9 @@ GLfloat yStep;
 GLfloat windowXmin, windowXmax;
 GLfloat windowYmin, windowYmax;
 
+// Posição do objeto
+
+
 // Variáveis de referência do plano cartesiano
 int range = 25;
 
@@ -110,12 +113,20 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 void Anima(int value)
 {
 	// Muda a direção quando chega na borda esquerda ou direita
-	if( (Tx+maxX) > windowXmax || (Tx+minX) < windowXmin )
-		xStep = -xStep;
+	if((Tx+maxX) > windowXmax) {
+		Tx = -range;
+	}
+	if((Tx+minX) < windowXmin) {
+		Tx = +range;
+	}
 
 	// Muda a direção quando chega na borda superior ou inferior
-	if( (Ty+maxY) > windowYmax || (Ty+minY) < windowYmin )
-		yStep = -yStep;
+	if((Ty+maxY) > windowYmax) {
+		Ty = -range;
+	}
+	if((Ty+minY) < windowYmin ) {
+		Ty = +range;
+	}
 
 	// Move a casinha
 	Tx += xStep;
@@ -136,21 +147,7 @@ void Anima(int value)
 
 // Função callback chamada para gerenciar eventos de teclas especiais
 void TeclasEspeciais(int key, int x, int y)
-{
-	// Rotaciona a nave
-	if(key == GLUT_KEY_HOME) {
-		angle-=5;
-  }
-	if(key == GLUT_KEY_END) {
-		angle+=5;
-  }
-  if(key == GLUT_KEY_PAGE_UP) {
-    xStep += 0.02f;
-  }
-  if(key == GLUT_KEY_PAGE_DOWN) {
-    xStep -= 0.02f;
-  }
-                                                
+{                                                
 	glutPostRedisplay();
 }
 
@@ -159,6 +156,29 @@ void Teclado (unsigned char key, int x, int y)
 {
 	if (key == 27)
 		exit(0);
+	
+	switch (key) {
+		case 'w':
+		case 'W':
+			// Lógica para mover para cima
+			xStep += 0.02f;
+			break;
+		case 'a':
+		case 'A':
+			// Lógica para mover para a esquerda
+			angle-=5;
+			break;
+		case 's':
+		case 'S':
+			// Lógica para mover para baixo
+			xStep -= 0.02f;
+			break;
+		case 'd':
+		case 'D':
+			// Lógica para mover para a direita
+			angle+=5;
+			break;
+	}
 }
            
 // Função responsável por inicializar par�metros e variáveis
