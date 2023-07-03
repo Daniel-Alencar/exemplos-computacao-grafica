@@ -13,6 +13,8 @@ typedef struct {
 	float y;
 } Point;
 
+bool on = true;
+
 GLfloat tx = 0;
 GLfloat win = 25;
 
@@ -25,6 +27,10 @@ GLfloat Ty;
 // Variáveis que guardam a translação que será aplicada sobre o asteróide
 GLfloat Tx_Asteroid;
 GLfloat Ty_Asteroid;
+// Variáveis que guardam a translação do tiro
+bool bullet = false;
+GLfloat Tx_bullet;
+GLfloat Ty_bullet;
 
 // Variáveis que guardam os valores mínimos de x e y da nave
 GLfloat minX, maxX;
@@ -41,6 +47,9 @@ GLfloat yStep;
 GLfloat xStep_Asteroid;
 GLfloat yStep_Asteroid;
 
+GLfloat xStep_bullet;
+GLfloat yStep_bullet;
+
 // Variáveis que guardam a largura e altura da janela
 GLfloat windowXmin, windowXmax;
 GLfloat windowYmin, windowYmax;
@@ -55,7 +64,13 @@ Point pointsAsteroid[10];
 
 
 
-
+// Função para desenhar a bala
+void DesenhaBala() {
+	glPointSize(5.0f);
+	glBegin(GL_POINTS);
+		glVertex2f(0,0); 
+	glEnd();
+}
 
 // Função para desenhar uma nave
 void DesenhaNave()
@@ -245,7 +260,7 @@ void Desenha(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 
-
+	if(on) {
 	// Inicializa a matriz de transformação corrente
 	glLoadIdentity();
 	gluOrtho2D(-range, range, -range, range);
@@ -276,11 +291,23 @@ void Desenha(void)
 	glLoadIdentity();
 	gluOrtho2D(-range, range, -range, range);
 
+	// Aplica uma translação sobre a Nave
+	glTranslatef(Tx_bullet, Ty_bullet, 0.0f);
+	glColor3f(1.0f,1.0f,1.0f);
+	DesenhaBala();
+
+
+
+	// Inicializa a matriz de transformação corrente
+	glLoadIdentity();
+	gluOrtho2D(-range, range, -range, range);
+
 	// Aplica uma translação sobre o asteroide
 	glTranslatef(Tx_Asteroid, Ty_Asteroid, 0.0f);
 
 	glColor3f(1.0f,1.0f,1.0f);
 	DesenhaAsteroide();
+	}
 
 
 
@@ -373,6 +400,12 @@ void Anima(int value)
 		yStep = 0;
 	}
 
+	if(bullet) {
+		// Move a bala
+		Tx_bullet += xStep_bullet;
+		Ty_bullet += yStep_bullet;
+	}
+
 	// Redesenha a Nave em outra posição
 	glutPostRedisplay();
 
@@ -404,8 +437,9 @@ void TeclasEspeciais(int key, int x, int y) {
 // Função callback chamada para gerenciar eventos de teclas
 void Teclado (unsigned char key, int x, int y)
 {
-	if (key == 27)
-		exit(0);
+	if (key == 27) {
+		on = !on;
+	}
 	
 	if(key == 'w' || key == 'W') {
 		// Lógica para mover para "cima"
@@ -424,6 +458,13 @@ void Teclado (unsigned char key, int x, int y)
 	if(key == 'd' || key == 'D') {
 		// Lógica para mover para a direita
 		angle-=5;
+	}
+	if(key == ' ') {
+		// Tiro
+		bullet = true;
+		xStep_bullet = xStep;
+		yStep_bullet = yStep;
+		printf("Atirou!\n");
 	}
 }
 
@@ -486,6 +527,9 @@ void Inicializa (void)
 	xStep_Asteroid = -0.000f;
 	yStep_Asteroid = +0.010f;
 	Tx_Asteroid = Ty_Asteroid = 10.0f;
+
+	xStep_bullet = yStep_bullet = 0.00f;
+	Tx_bullet = Ty_bullet = 0.0f;
 
 	minX = -7.0f;
 	maxX = +7.0f;
