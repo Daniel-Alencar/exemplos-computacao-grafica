@@ -13,7 +13,7 @@ typedef struct {
 	float y;
 } Point;
 
-bool on = true;
+int scene = 0;
 
 GLfloat tx = 0;
 GLfloat win = 25;
@@ -247,9 +247,24 @@ bool verifyIntersects() {
 }
 
 
+void desenharTexto(float x, float y, const char* texto, bool font_size) {
+	glRasterPos2f(x, y);
+
+	for (int i = 0; texto[i] != '\0'; i++) {
+		if(font_size){
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, texto[i]);
+		}else{
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, texto[i]);
+		}
+		
+	}
+}
 
 
-
+void DesenhaTelaInicial(){
+	desenharTexto(-5, 0, "Asteroides", true);
+	desenharTexto(-10, -5, "Aperte espaço para começar", false);
+}
 
 // Função callback de redesenho da janela de visualização
 void Desenha(void)
@@ -259,57 +274,62 @@ void Desenha(void)
 	// Limpa a janela de visualização com a cor de fundo definida previamente
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	switch (scene){
+		case 0:
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
 
-	if(on) {
-	// Inicializa a matriz de transformação corrente
-	glLoadIdentity();
-	gluOrtho2D(-range, range, -range, range);
-
-	glColor3f(1.0f, 1.0f, 1.0f);
-	DesenhaPontosDeReferencia();
-     
+			DesenhaTelaInicial();
 
 
-	// Inicializa a matriz de transformação corrente
-	glLoadIdentity();
-	gluOrtho2D(-range, range, -range, range);
+		case 1:
+			
+			break;
+		case 2:
+			// Inicializa a matriz de transformação corrente
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
 
-	// Aplica uma translação sobre a Nave
-	glTranslatef(Tx, Ty, 0.0f);
+			glColor3f(1.0f, 1.0f, 1.0f);
+			DesenhaPontosDeReferencia();
 
-	// Desenha uma rotação sobre a Nave
-	glTranslatef(0.0f,0.0f,0.0f);
-	glRotatef(angle,0.0f,0.0f,1.0f);
-	glTranslatef(0.0f,0.0f,0.0f);
+			// Inicializa a matriz de transformação corrente
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
 
-	glColor3f(1.0f,1.0f,1.0f);
-	DesenhaNave();
+			// Aplica uma translação sobre a Nave
+			glTranslatef(Tx, Ty, 0.0f);
 
+			// Desenha uma rotação sobre a Nave
+			glTranslatef(0.0f,0.0f,0.0f);
+			glRotatef(angle,0.0f,0.0f,1.0f);
+			glTranslatef(0.0f,0.0f,0.0f);
 
+			glColor3f(1.0f,1.0f,1.0f);
+			DesenhaNave();
 
-	// Inicializa a matriz de transformação corrente
-	glLoadIdentity();
-	gluOrtho2D(-range, range, -range, range);
+			// Inicializa a matriz de transformação corrente
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
 
-	// Aplica uma translação sobre a Nave
-	glTranslatef(Tx_bullet, Ty_bullet, 0.0f);
-	glColor3f(1.0f,1.0f,1.0f);
-	DesenhaBala();
+			// Aplica uma translação sobre a Nave
+			glTranslatef(Tx_bullet, Ty_bullet, 0.0f);
+			glColor3f(1.0f,1.0f,1.0f);
+			DesenhaBala();
 
+			// Inicializa a matriz de transformação corrente
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
 
+			// Aplica uma translação sobre o asteroide
+			glTranslatef(Tx_Asteroid, Ty_Asteroid, 0.0f);
 
-	// Inicializa a matriz de transformação corrente
-	glLoadIdentity();
-	gluOrtho2D(-range, range, -range, range);
-
-	// Aplica uma translação sobre o asteroide
-	glTranslatef(Tx_Asteroid, Ty_Asteroid, 0.0f);
-
-	glColor3f(1.0f,1.0f,1.0f);
-	DesenhaAsteroide();
+			glColor3f(1.0f,1.0f,1.0f);
+			DesenhaAsteroide();
+			break;
+		default:
+			break;
 	}
-
-
 
 	// Executa os comandos OpenGL 
 	glutSwapBuffers();
@@ -438,7 +458,11 @@ void TeclasEspeciais(int key, int x, int y) {
 void Teclado (unsigned char key, int x, int y)
 {
 	if (key == 27) {
-		on = !on;
+		if (scene == 1){
+			scene = 2;
+		}else if ( scene == 2){
+			scene = 1;
+		}
 	}
 	
 	if(key == 'w' || key == 'W') {
@@ -460,6 +484,11 @@ void Teclado (unsigned char key, int x, int y)
 		angle-=5;
 	}
 	if(key == ' ') {
+		if (scene == 0){
+			scene = 2;
+		}
+
+
 		// Tiro
 		bullet = true;
 		xStep_bullet = xStep;
