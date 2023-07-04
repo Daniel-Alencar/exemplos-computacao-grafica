@@ -58,27 +58,27 @@ void Inicializa (void)
 	pointsAsteroid[8] = p09_asteroid;
 	pointsAsteroid[9] = p10_asteroid;
 
+	spaceship.angle = 0;
 
+	spaceship.xStep = spaceship.yStep = 0.00f;
+	spaceship.Tx = spaceship.Ty = 0.0f;
 
-	xStep = yStep = 0.00f;
-	Tx = Ty = 0.0f;
+	asteroid.xStep = -0.000f;
+	asteroid.yStep = +0.010f;
+	asteroid.Tx = asteroid.Ty = 10.0f;
 
-	xStep_Asteroid = -0.000f;
-	yStep_Asteroid = +0.010f;
-	Tx_Asteroid = Ty_Asteroid = 10.0f;
+	bullet.xStep = bullet.yStep = 0.00f;
+	bullet.Tx = bullet.Ty = 0.0f;
 
-	xStep_bullet = yStep_bullet = 0.00f;
-	Tx_bullet = Ty_bullet = 0.0f;
+	spaceship.minX = -7.0f;
+	spaceship.maxX = +7.0f;
+	spaceship.minY = -7.0f;
+	spaceship.maxY = +7.0f;
 
-	minX = -7.0f;
-	maxX = +7.0f;
-	minY = -7.0f;
-	maxY = +7.0f;
-
-	minX_Asteroid = -7.0f;
-	maxX_Asteroid = +7.0f;
-	minY_Asteroid = -7.0f;
-	maxY_Asteroid = +7.0f;
+	asteroid.minX = -7.0f;
+	asteroid.maxX = +7.0f;
+	asteroid.minY = -7.0f;
+	asteroid.maxY = +7.0f;
 
 	windowXmin = windowYmin = -40.0f;
 	windowXmax = windowYmax = +40.0f;
@@ -124,63 +124,63 @@ void Anima(int value)
 {
 	// Translação da NAVE
 	// Muda a posição quando chega na borda esquerda e direita
-	if((Tx+maxX) > windowXmax) {
-		Tx = -range;
-	} else if((Tx+minX) < windowXmin) {
-		Tx = +range;
+	if((spaceship.Tx+spaceship.maxX) > windowXmax) {
+		spaceship.Tx = -range;
+	} else if((spaceship.Tx+spaceship.minX) < windowXmin) {
+		spaceship.Tx = +range;
 	}
 	// Muda a posição quando chega na borda superior e inferior
-	if((Ty+maxY) > windowYmax) {
-		Ty = -range;
-	} else if((Ty+minY) < windowYmin) {
-		Ty = +range;
+	if((spaceship.Ty+spaceship.maxY) > windowYmax) {
+		spaceship.Ty = -range;
+	} else if((spaceship.Ty+spaceship.minY) < windowYmin) {
+		spaceship.Ty = +range;
 	}
 
 	// Translação do ASTERÓIDE
 	// Muda a posição quando chega na borda esquerda e direita
-	if((Tx_Asteroid+maxX_Asteroid) > windowXmax) {
+	if((asteroid.Tx+asteroid.maxX) > windowXmax) {
 		printf("Lado direito\n");
-		Tx_Asteroid = -range + minX_Asteroid;
-	} else if((Tx_Asteroid+minX_Asteroid) < windowXmin) {
+		asteroid.Tx = -range + asteroid.minX;
+	} else if((asteroid.Tx+asteroid.minX) < windowXmin) {
 		printf("Lado esquerdo\n");
-		Tx_Asteroid = +range + maxX_Asteroid;
+		asteroid.Tx = +range + asteroid.maxX;
 	}
 	// Muda a posição quando chega na borda superior e inferior
-	if((Ty_Asteroid+maxY_Asteroid) > windowYmax) {
+	if((asteroid.Ty+asteroid.maxY) > windowYmax) {
 		printf("Lado de cima\n");
-		Ty_Asteroid = -range + minY_Asteroid;
-	} else if((Ty_Asteroid+minY_Asteroid) < windowYmin) {
+		asteroid.Ty = -range + asteroid.minY;
+	} else if((asteroid.Ty+asteroid.minY) < windowYmin) {
 		printf("Lado de baixo\n");
-		Ty_Asteroid = +range + maxY_Asteroid;
+		asteroid.Ty = +range + asteroid.maxY;
 	}
 
-	colision = verifyIntersects() || verifyBullet();
+	colisionExists = verifyIntersects() || verifyBullet();
 	if(verifyBullet()) {
 		printf("ENTROUUUUUUUUU\n");
 	}
 
-	if(!colision) {
+	if(!colisionExists) {
 		// Move a Nave
-		Tx += xStep;
-		Ty += yStep;
+		spaceship.Tx += spaceship.xStep;
+		spaceship.Ty += spaceship.yStep;
 
 		// Move o Asteroid
-		Tx_Asteroid += xStep_Asteroid;
-		Ty_Asteroid += yStep_Asteroid;
+		asteroid.Tx += asteroid.xStep;
+		asteroid.Ty += asteroid.yStep;
 
 	} else {
 		printf("Com interseção!\n");
 		// Zera variáveis de translação da nave
-		Tx = 0;
-		Ty = 0;
-		xStep = 0;
-		yStep = 0;
+		spaceship.Tx = 0;
+		spaceship.Ty = 0;
+		spaceship.xStep = 0;
+		spaceship.yStep = 0;
 	}
 
-	if(bullet) {
+	if(bulletExists) {
 		// Move a bala
-		Tx_bullet += xStep_bullet;
-		Ty_bullet += yStep_bullet;
+		bullet.Tx += bullet.xStep;
+		bullet.Ty += bullet.yStep;
 	}
 
 	// Redesenha a Nave em outra posição

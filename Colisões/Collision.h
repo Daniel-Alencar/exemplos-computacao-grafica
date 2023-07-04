@@ -83,20 +83,20 @@ bool detectColision(GLfloat x1, GLfloat y1, GLfloat r1,
 }
 
 bool verifyIntersects() {
-	for(int i = 0; i < 3; i++) {
-		for(int j = 0; j < 10; j++) {
+	for(int i = 0; i < POINTS_SPACESHIP; i++) {
+		for(int j = 0; j < POINTS_ASTEROID; j++) {
 			Point nave_point1 = { 
-				pointsNave[i].x + Tx, pointsNave[i].y + Ty 
+				pointsNave[i].x + spaceship.Tx, pointsNave[i].y + spaceship.Ty 
 			};
 			Point nave_point2 = { 
-				pointsNave[(i+1)%3].x + Tx, pointsNave[(i+1)%3].y + Ty 
+				pointsNave[(i+1)%3].x + spaceship.Tx, pointsNave[(i+1)%3].y + spaceship.Ty 
 			};
 			Point asteroid_point1 = { 
-				pointsAsteroid[j].x + Tx_Asteroid, pointsAsteroid[j].y + Ty_Asteroid 
+				pointsAsteroid[j].x + asteroid.Tx, pointsAsteroid[j].y + asteroid.Ty 
 			};
 			Point asteroid_point2 = { 
-				pointsAsteroid[(j+1)%10].x + Tx_Asteroid, 
-				pointsAsteroid[(j+1)%10].y + Ty_Asteroid 
+				pointsAsteroid[(j+1)%POINTS_ASTEROID].x + asteroid.Tx, 
+				pointsAsteroid[(j+1)%POINTS_ASTEROID].y + asteroid.Ty 
 			};
 
 			if(doIntersect(
@@ -111,17 +111,17 @@ bool verifyIntersects() {
 }
 
 bool verifyBullet() {
-  for(int j = 0; j < 10; j++) {
+  for(int j = 0; j < POINTS_ASTEROID; j++) {
     Point asteroid_point1 = { 
-      pointsAsteroid[j].x + Tx_Asteroid, pointsAsteroid[j].y + Ty_Asteroid 
+      pointsAsteroid[j].x + asteroid.Tx, pointsAsteroid[j].y + asteroid.Ty 
     };
     Point asteroid_point2 = { 
-      pointsAsteroid[(j+1)%10].x + Tx_Asteroid, 
-      pointsAsteroid[(j+1)%10].y + Ty_Asteroid 
+      pointsAsteroid[(j+1)%POINTS_ASTEROID].x + asteroid.Tx,
+      pointsAsteroid[(j+1)%POINTS_ASTEROID].y + asteroid.Ty 
     };
 
-    Point bulletPoint1 = {Tx_bullet, Ty_bullet};
-    Point bulletPoint2 = {Tx_bullet * 1.1f, Ty_bullet * 1.1f};
+    Point bulletPoint1 = {bullet.Tx, bullet.Ty};
+    Point bulletPoint2 = {bullet.Tx * 1.1f, bullet.Ty * 1.1f};
 
     if(doIntersect(
       bulletPoint1, bulletPoint2,

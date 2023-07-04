@@ -97,11 +97,11 @@ void Desenha(void)
 			gluOrtho2D(-range, range, -range, range);
 
 			// Aplica uma translação sobre a Nave
-			glTranslatef(Tx, Ty, 0.0f);
+			glTranslatef(spaceship.Tx, spaceship.Ty, 0.0f);
 
 			// Desenha uma rotação sobre a Nave
 			glTranslatef(0.0f,0.0f,0.0f);
-			glRotatef(angle,0.0f,0.0f,1.0f);
+			glRotatef(spaceship.angle,0.0f,0.0f,1.0f);
 			glTranslatef(0.0f,0.0f,0.0f);
 
 			glColor3f(1.0f,1.0f,1.0f);
@@ -112,7 +112,7 @@ void Desenha(void)
 			gluOrtho2D(-range, range, -range, range);
 
 			// Aplica uma translação sobre a Nave
-			glTranslatef(Tx_bullet, Ty_bullet, 0.0f);
+			glTranslatef(bullet.Tx, bullet.Ty, 0.0f);
 			glColor3f(1.0f,1.0f,1.0f);
 			DesenhaBala();
 
@@ -121,7 +121,7 @@ void Desenha(void)
 			gluOrtho2D(-range, range, -range, range);
 
 			// Aplica uma translação sobre o asteroide
-			glTranslatef(Tx_Asteroid, Ty_Asteroid, 0.0f);
+			glTranslatef(asteroid.Tx, asteroid.Ty, 0.0f);
 
 			glColor3f(1.0f,1.0f,1.0f);
 			DesenhaAsteroide();
