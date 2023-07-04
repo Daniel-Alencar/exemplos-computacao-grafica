@@ -33,11 +33,12 @@ void Teclado (unsigned char key, int x, int y)
 			scene = 2;
 		}
 
-
+    Tx_bullet = Tx;
+    Ty_bullet = Ty;
 		// Tiro
 		bullet = true;
-		xStep_bullet = xStep;
-		yStep_bullet = yStep;
+		xStep_bullet = cos(convertDegreesToRadians(angle + 90)) * 0.030f;
+		yStep_bullet = sin(convertDegreesToRadians(angle + 90)) * 0.030f;
 		printf("Atirou!\n");
 	}
 }

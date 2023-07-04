@@ -109,3 +109,26 @@ bool verifyIntersects() {
 	}
 	return false;
 }
+
+bool verifyBullet() {
+  for(int j = 0; j < 10; j++) {
+    Point asteroid_point1 = { 
+      pointsAsteroid[j].x + Tx_Asteroid, pointsAsteroid[j].y + Ty_Asteroid 
+    };
+    Point asteroid_point2 = { 
+      pointsAsteroid[(j+1)%10].x + Tx_Asteroid, 
+      pointsAsteroid[(j+1)%10].y + Ty_Asteroid 
+    };
+
+    Point bulletPoint1 = {Tx_bullet, Ty_bullet};
+    Point bulletPoint2 = {Tx_bullet * 1.1f, Ty_bullet * 1.1f};
+
+    if(doIntersect(
+      bulletPoint1, bulletPoint2,
+      asteroid_point1, asteroid_point2
+    )) {
+      return true;
+    }
+  }
+  return false;
+}

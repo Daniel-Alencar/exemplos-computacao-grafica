@@ -15,145 +15,11 @@
 #include "Util.h"
 #include "Keyboard.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Função callback chamada quando o tamanho da janela é alterado 
-void AlteraTamanhoJanela(GLsizei w, GLsizei h)
-{
-	GLsizei largura, altura;
-                   
-	// Evita a divisao por zero
-	if(h == 0) h = 1;
-
-	// Atualiza as variáveis
-	largura = w;
-	altura = h;
-                                              
-	// Especifica as dimensões da Viewport
-	glViewport(0, 0, largura, altura);
-
-	// Inicializa o sistema de coordenadas
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	// Estabelece a janela de seleção
-	// (esquerda, direita, inferior, superior)
-	// mantendo a proporção com a janela de visualização
-	if (largura <= altura) { 
-		gluOrtho2D (-25.0f, 25.0f, -25.0f*altura/largura, 25.0f*altura/largura);
-		win = 25.0f;
-	} else { 
-		gluOrtho2D (-25.0f*largura/altura, 25.0f*largura/altura, -25.0f, 25.0f);
-		win = 25.0f*largura/altura;           
-	}             
-}
-
-// Função callback chamada pela GLUT a cada intervalo de tempo
-void Anima(int value)
-{
-	// Translação da NAVE
-	// Muda a posição quando chega na borda esquerda e direita
-	if((Tx+maxX) > windowXmax) {
-		Tx = -range;
-	} else if((Tx+minX) < windowXmin) {
-		Tx = +range;
-	}
-	// Muda a posição quando chega na borda superior e inferior
-	if((Ty+maxY) > windowYmax) {
-		Ty = -range;
-	} else if((Ty+minY) < windowYmin) {
-		Ty = +range;
-	}
-
-	// Translação do ASTERÓIDE
-	// Muda a posição quando chega na borda esquerda e direita
-	if((Tx_Asteroid+maxX_Asteroid) > windowXmax) {
-		printf("Lado direito\n");
-		Tx_Asteroid = -range + minX_Asteroid;
-	} else if((Tx_Asteroid+minX_Asteroid) < windowXmin) {
-		printf("Lado esquerdo\n");
-		Tx_Asteroid = +range + maxX_Asteroid;
-	}
-	// Muda a posição quando chega na borda superior e inferior
-	if((Ty_Asteroid+maxY_Asteroid) > windowYmax) {
-		printf("Lado de cima\n");
-		Ty_Asteroid = -range + minY_Asteroid;
-	} else if((Ty_Asteroid+minY_Asteroid) < windowYmin) {
-		printf("Lado de baixo\n");
-		Ty_Asteroid = +range + maxY_Asteroid;
-	}
-
-	colision = verifyIntersects();
-	if(!colision) {
-		// Move a Nave
-		Tx += xStep;
-		Ty += yStep;
-
-		// Move o Asteroid
-		Tx_Asteroid += xStep_Asteroid;
-		Ty_Asteroid += yStep_Asteroid;
-
-	} else {
-		printf("Com interseção!\n");
-		// Zera variáveis de translação da nave
-		Tx = 0;
-		Ty = 0;
-		xStep = 0;
-		yStep = 0;
-	}
-
-	if(bullet) {
-		// Move a bala
-		Tx_bullet += xStep_bullet;
-		Ty_bullet += yStep_bullet;
-	}
-
-	// Redesenha a Nave em outra posição
-	glutPostRedisplay();
-
-	// Parâmetros:
-	// - Milliseconds: especifica o tempo em milissegundos que 
-  // deve decorrer antes que a função de retorno de chamada seja chamada.
-	// - Callback: é um ponteiro para a função que será chamada 
-  // após o tempo especificado.
-	// - Value: é um valor inteiro que é passado como argumento 
-  // para a função de retorno de chamada.
-	glutTimerFunc(1, Anima, 1);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Função responsável por inicializar par�metros e variáveis
 void Inicializa (void)
 {   
 	// Define a cor de fundo da janela de visualização
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-
 
   // Inicialização das variáveis globais
 	Point p1_nave = {+0.0, +1.5};
@@ -222,11 +88,113 @@ void Inicializa (void)
 	printf("windowYmin: %.2f e windowYmax: %.2f\n", windowYmin, windowYmax);
 }
 
+// Função callback chamada quando o tamanho da janela é alterado 
+void AlteraTamanhoJanela(GLsizei w, GLsizei h)
+{
+	GLsizei largura, altura;
+                   
+	// Evita a divisao por zero
+	if(h == 0) h = 1;
 
+	// Atualiza as variáveis
+	largura = w;
+	altura = h;
+                                              
+	// Especifica as dimensões da Viewport
+	glViewport(0, 0, largura, altura);
 
+	// Inicializa o sistema de coordenadas
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 
+	// Estabelece a janela de seleção
+	// (esquerda, direita, inferior, superior)
+	// mantendo a proporção com a janela de visualização
+	if (largura <= altura) { 
+		gluOrtho2D (-25.0f, 25.0f, -25.0f*altura/largura, 25.0f*altura/largura);
+		win = 25.0f;
+	} else { 
+		gluOrtho2D (-25.0f*largura/altura, 25.0f*largura/altura, -25.0f, 25.0f);
+		win = 25.0f*largura/altura;           
+	}             
+}
 
+// Função callback chamada pela GLUT a cada intervalo de tempo
+void Anima(int value)
+{
+	// Translação da NAVE
+	// Muda a posição quando chega na borda esquerda e direita
+	if((Tx+maxX) > windowXmax) {
+		Tx = -range;
+	} else if((Tx+minX) < windowXmin) {
+		Tx = +range;
+	}
+	// Muda a posição quando chega na borda superior e inferior
+	if((Ty+maxY) > windowYmax) {
+		Ty = -range;
+	} else if((Ty+minY) < windowYmin) {
+		Ty = +range;
+	}
 
+	// Translação do ASTERÓIDE
+	// Muda a posição quando chega na borda esquerda e direita
+	if((Tx_Asteroid+maxX_Asteroid) > windowXmax) {
+		printf("Lado direito\n");
+		Tx_Asteroid = -range + minX_Asteroid;
+	} else if((Tx_Asteroid+minX_Asteroid) < windowXmin) {
+		printf("Lado esquerdo\n");
+		Tx_Asteroid = +range + maxX_Asteroid;
+	}
+	// Muda a posição quando chega na borda superior e inferior
+	if((Ty_Asteroid+maxY_Asteroid) > windowYmax) {
+		printf("Lado de cima\n");
+		Ty_Asteroid = -range + minY_Asteroid;
+	} else if((Ty_Asteroid+minY_Asteroid) < windowYmin) {
+		printf("Lado de baixo\n");
+		Ty_Asteroid = +range + maxY_Asteroid;
+	}
+
+	colision = verifyIntersects() || verifyBullet();
+	if(verifyBullet()) {
+		printf("ENTROUUUUUUUUU\n");
+	}
+
+	if(!colision) {
+		// Move a Nave
+		Tx += xStep;
+		Ty += yStep;
+
+		// Move o Asteroid
+		Tx_Asteroid += xStep_Asteroid;
+		Ty_Asteroid += yStep_Asteroid;
+
+	} else {
+		printf("Com interseção!\n");
+		// Zera variáveis de translação da nave
+		Tx = 0;
+		Ty = 0;
+		xStep = 0;
+		yStep = 0;
+	}
+
+	if(bullet) {
+		// Move a bala
+		Tx_bullet += xStep_bullet;
+		Ty_bullet += yStep_bullet;
+	}
+
+	// Redesenha a Nave em outra posição
+	glutPostRedisplay();
+
+	// Parâmetros:
+	// - Milliseconds: especifica o tempo em milissegundos que 
+  // deve decorrer antes que a função de retorno de chamada seja chamada.
+	// - Callback: é um ponteiro para a função que será chamada 
+  // após o tempo especificado.
+	// - Value: é um valor inteiro que é passado como argumento 
+  // para a função de retorno de chamada.
+	glutTimerFunc(1, Anima, 1);
+}
 
 // Programa Principal 
 int main(int argc, char** argv)
