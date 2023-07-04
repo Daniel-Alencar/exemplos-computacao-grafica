@@ -65,7 +65,9 @@ void Inicializa (void)
 
 	asteroid.xStep = -0.000f;
 	asteroid.yStep = +0.010f;
-	asteroid.Tx = asteroid.Ty = 10.0f;
+
+	asteroid.Tx = -range + generateRandomFloat() * 50;
+	asteroid.Ty = -range + generateRandomFloat() * 50;
 
 	bullet.xStep = bullet.yStep = 0.00f;
 	bullet.Tx = bullet.Ty = 0.0f;

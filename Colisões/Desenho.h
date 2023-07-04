@@ -45,7 +45,6 @@ void DesenhaAsteroide() {
 }
 
 void DesenhaPontosDeReferencia() {
-	glClear(GL_COLOR_BUFFER_BIT);
     
 	glPointSize(10.0f);
   glBegin(GL_POINTS);
@@ -77,20 +76,18 @@ void Desenha(void)
 		case 0:
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
+			DrawInitialScreen();
 
-			DesenhaTelaInicial();
+			// Inicializa a matriz de transformação corrente
+			// glLoadIdentity();
+			// gluOrtho2D(-range, range, -range, range);
 
-
+			// glColor3f(1.0f, 1.0f, 1.0f);
+			// DesenhaPontosDeReferencia();
 		case 1:
 			
-			break;
 		case 2:
-			// Inicializa a matriz de transformação corrente
-			glLoadIdentity();
-			gluOrtho2D(-range, range, -range, range);
 
-			glColor3f(1.0f, 1.0f, 1.0f);
-			DesenhaPontosDeReferencia();
 
 			// Inicializa a matriz de transformação corrente
 			glLoadIdentity();
@@ -114,7 +111,9 @@ void Desenha(void)
 			// Aplica uma translação sobre a Nave
 			glTranslatef(bullet.Tx, bullet.Ty, 0.0f);
 			glColor3f(1.0f,1.0f,1.0f);
-			DesenhaBala();
+			if(bulletExists) {
+			  DesenhaBala();
+			}
 
 			// Inicializa a matriz de transformação corrente
 			glLoadIdentity();
