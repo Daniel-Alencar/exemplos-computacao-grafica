@@ -6,7 +6,7 @@ void drawText(const char* text, float x, float y) {
 	}
 }
 
-void DrawInitialScreen(const char *string){
+void DrawInitialScreen(const char *string, int y_pos){
 	const char* text = string;
 
 	// Obtém as dimensões da janela
@@ -18,11 +18,7 @@ void DrawInitialScreen(const char *string){
 	float textPosScreenX = windowWidth / 2 - textSizeX / 2;
 	float textPosX = ((textPosScreenX) * 2 * range) / (windowWidth);
 
-	// printf("windowWidth: %d\n", windowWidth);
-	// printf("textSizeX: %f\n", textSizeX);
-	// printf("Posição X: %f\n", textPosX);
-
 	// Desenha o texto centralizado
 	glColor3f(redValue, greenValue, blueValue);
-	drawText(text,-range+textPosX + 1.5, -5);
+	drawText(text,-range+textPosX + 1.5, y_pos);
 }

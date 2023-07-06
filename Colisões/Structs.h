@@ -6,6 +6,7 @@
 #define SCENE_MENU 0
 #define SCENE_START 1
 #define SCENE_GAME 2
+#define SCENE_GAMEOVER 3
 
 typedef struct {
 	float x;
@@ -40,7 +41,8 @@ Point pointsNave[POINTS_SPACESHIP];
 Point pointsAsteroid[POINTS_ASTEROID];
 
 // Variáveis de controle
-bool colisionExists = false;
+bool spaceshipCollision = false;
+bool bulletColision = false;
 int scene = SCENE_START;
 
 int currentColor = 0;

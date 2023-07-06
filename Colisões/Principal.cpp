@@ -156,12 +156,31 @@ void Anima(int value)
 		asteroid.Ty = +range + asteroid.maxY;
 	}
 
-	colisionExists = verifyIntersects() || verifyBullet();
-	if(verifyBullet()) {
-		printf("ENTROUUUUUUUUU\n");
+	if(scene != SCENE_START) {
+		spaceshipCollision = verifyIntersects();
+		bulletColision = verifyBullet();
+		
+		if(bulletColision) {
+			printf("Bala colidiu!\n");
+		}
+		if(spaceshipCollision) {
+			printf("Game Over!\n");
+			// Zera variáveis de translação da nave
+			spaceship.Tx = 0;
+			spaceship.Ty = 0;
+			spaceship.xStep = 0;
+			spaceship.yStep = 0;
+
+			scene = SCENE_GAMEOVER;
+		}
 	}
 
-	if(!colisionExists) {
+	if(bulletExists) {
+		// Move a bala
+		bullet.Tx += bullet.xStep;
+		bullet.Ty += bullet.yStep;
+	}
+	if(!spaceshipCollision) {
 		// Move a Nave
 		spaceship.Tx += spaceship.xStep;
 		spaceship.Ty += spaceship.yStep;
@@ -169,20 +188,6 @@ void Anima(int value)
 		// Move o Asteroid
 		asteroid.Tx += asteroid.xStep;
 		asteroid.Ty += asteroid.yStep;
-
-	} else {
-		printf("Com interseção!\n");
-		// Zera variáveis de translação da nave
-		spaceship.Tx = 0;
-		spaceship.Ty = 0;
-		spaceship.xStep = 0;
-		spaceship.yStep = 0;
-	}
-
-	if(bulletExists) {
-		// Move a bala
-		bullet.Tx += bullet.xStep;
-		bullet.Ty += bullet.yStep;
 	}
 
 	// Redesenha a Nave em outra posição

@@ -75,16 +75,18 @@ void Desenha(void)
 	glColor3f(redValue, greenValue, blueValue);
 
 	switch (scene){
-		case 0:
+		case SCENE_MENU:
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
-			DrawInitialScreen("Click 'e' to change color");
+			DrawInitialScreen("Click 'e' to change color", 0);
+			DrawInitialScreen("Pedro Amaro", -7);
+			DrawInitialScreen("Daniel Alencar", -9);
 			break;
 
-		case 1:
+		case SCENE_START:
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
-			DrawInitialScreen("Click 'space' to start");
+			DrawInitialScreen("Click 'space' to start", -5);
 
 			// Inicializa a matriz de transformação corrente
 			// glLoadIdentity();
@@ -92,7 +94,7 @@ void Desenha(void)
 
 			// DesenhaPontosDeReferencia();
 
-		case 2:
+		case SCENE_GAME:
 			// Inicializa a matriz de transformação corrente
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
@@ -125,6 +127,10 @@ void Desenha(void)
 			glTranslatef(asteroid.Tx, asteroid.Ty, 0.0f);
 
 			DesenhaAsteroide();
+			break;
+		case SCENE_GAMEOVER:
+			glColor3f(1.0f, 0.0f, 0.0f);
+			DrawInitialScreen("GAME OVER", 0);
 			break;
 		default:
 			break;
