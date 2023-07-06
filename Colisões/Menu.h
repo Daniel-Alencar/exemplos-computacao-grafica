@@ -6,8 +6,8 @@ void drawText(const char* text, float x, float y) {
 	}
 }
 
-void DrawInitialScreen(){
-	const char* text = "Click space to start";
+void DrawInitialScreen(const char *string){
+	const char* text = string;
 
 	// Obtém as dimensões da janela
 	int windowWidth = glutGet(GLUT_WINDOW_WIDTH);
@@ -23,6 +23,6 @@ void DrawInitialScreen(){
 	// printf("Posição X: %f\n", textPosX);
 
 	// Desenha o texto centralizado
-	glColor3f(1.0, 1.0, 1.0);
+	glColor3f(redValue, greenValue, blueValue);
 	drawText(text,-range+textPosX + 1.5, -5);
 }

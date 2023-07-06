@@ -3,6 +3,10 @@
 #define POINTS_SPACESHIP 3
 #define POINTS_ASTEROID 10
 
+#define SCENE_MENU 0
+#define SCENE_START 1
+#define SCENE_GAME 2
+
 typedef struct {
 	float x;
 	float y;
@@ -37,5 +41,9 @@ Point pointsAsteroid[POINTS_ASTEROID];
 
 // Variáveis de controle
 bool colisionExists = false;
-int scene = 0;
+int scene = SCENE_START;
 
+int currentColor = 0;
+float redValue = 1.0f;
+float greenValue = 1.0f;
+float blueValue = 1.0f;

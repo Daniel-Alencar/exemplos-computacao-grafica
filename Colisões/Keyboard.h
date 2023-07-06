@@ -3,15 +3,15 @@
 void Teclado (unsigned char key, int x, int y)
 {
 	if (key == 27) {
-		if (scene == 1){
-			scene = 2;
-		}else if ( scene == 2){
-			scene = 1;
+		if (scene == SCENE_MENU){
+			scene = SCENE_GAME;
+		}else if ( scene == SCENE_GAME){
+			scene = SCENE_MENU;
 		}
 	}
 	if(key == ' ') {
-		if (scene == 0){
-			scene = 2;
+		if (scene == SCENE_START){
+			scene = SCENE_GAME;
 		}
 
 		bullet.Tx = spaceship.Tx;
@@ -23,7 +23,7 @@ void Teclado (unsigned char key, int x, int y)
 		printf("Atirou!\n");
 	}
 
-	if(scene != 0) {
+	if(scene != SCENE_START) {
 		if(key == 'w' || key == 'W') {
 			// Lógica para mover para "cima"
 			spaceship.xStep += +cos(convertDegreesToRadians(spaceship.angle + 90)) * 0.001f;
@@ -43,6 +43,40 @@ void Teclado (unsigned char key, int x, int y)
 			spaceship.angle-=5;
 		}
 	}
+
+	if(scene == SCENE_MENU) {
+		if(key == 'e' || key == 'E') {
+			currentColor++;
+			if(currentColor > 3)
+				currentColor = 0;
+				
+			switch (currentColor){
+				case 0:
+					redValue = 1.0f;
+					greenValue = 1.0f;
+					blueValue = 1.0f;
+					break;
+				case 1:
+					redValue = 1.0f;
+					greenValue = 0.0f;
+					blueValue = 0.0f;
+					break;
+				case 2:
+					redValue = 0.0f;
+					greenValue = 1.0f;
+					blueValue = 0.0f;
+					break;
+				case 3:
+					redValue = 0.0f;
+					greenValue = 0.0f;
+					blueValue = 1.0f;
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
 	glutPostRedisplay();
 }
 

@@ -72,23 +72,27 @@ void Desenha(void)
 	// Limpa a janela de visualização com a cor de fundo definida previamente
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	glColor3f(redValue, greenValue, blueValue);
+
 	switch (scene){
 		case 0:
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
-			DrawInitialScreen();
+			DrawInitialScreen("Click 'e' to change color");
+			break;
+
+		case 1:
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
+			DrawInitialScreen("Click 'space' to start");
 
 			// Inicializa a matriz de transformação corrente
 			// glLoadIdentity();
 			// gluOrtho2D(-range, range, -range, range);
 
-			// glColor3f(1.0f, 1.0f, 1.0f);
 			// DesenhaPontosDeReferencia();
-		case 1:
-			
+
 		case 2:
-
-
 			// Inicializa a matriz de transformação corrente
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
@@ -101,7 +105,6 @@ void Desenha(void)
 			glRotatef(spaceship.angle,0.0f,0.0f,1.0f);
 			glTranslatef(0.0f,0.0f,0.0f);
 
-			glColor3f(1.0f,1.0f,1.0f);
 			DesenhaNave();
 
 			// Inicializa a matriz de transformação corrente
@@ -110,7 +113,6 @@ void Desenha(void)
 
 			// Aplica uma translação sobre a Nave
 			glTranslatef(bullet.Tx, bullet.Ty, 0.0f);
-			glColor3f(1.0f,1.0f,1.0f);
 			if(bulletExists) {
 			  DesenhaBala();
 			}
@@ -122,7 +124,6 @@ void Desenha(void)
 			// Aplica uma translação sobre o asteroide
 			glTranslatef(asteroid.Tx, asteroid.Ty, 0.0f);
 
-			glColor3f(1.0f,1.0f,1.0f);
 			DesenhaAsteroide();
 			break;
 		default:
