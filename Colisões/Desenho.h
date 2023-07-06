@@ -88,6 +88,7 @@ void Desenha(void)
 			gluOrtho2D(-range, range, -range, range);
 			DrawInitialScreen("Click 'space' to start", -5);
 
+
 			// Inicializa a matriz de transformação corrente
 			// glLoadIdentity();
 			// gluOrtho2D(-range, range, -range, range);
@@ -98,6 +99,8 @@ void Desenha(void)
 			// Inicializa a matriz de transformação corrente
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
+			
+			drawText("Click 'esc' to pause", -20, 20);	
 
 			// Aplica uma translação sobre a Nave
 			glTranslatef(spaceship.Tx, spaceship.Ty, 0.0f);
@@ -129,7 +132,11 @@ void Desenha(void)
 			DesenhaAsteroide();
 			break;
 		case SCENE_GAMEOVER:
-			glColor3f(1.0f, 0.0f, 0.0f);
+			
+			// Inicializa a matriz de transformação corrente
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
+
 			DrawInitialScreen("GAME OVER", 0);
 			break;
 		default:

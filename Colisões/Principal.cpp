@@ -175,20 +175,23 @@ void Anima(int value)
 		}
 	}
 
-	if(bulletExists) {
-		// Move a bala
-		bullet.Tx += bullet.xStep;
-		bullet.Ty += bullet.yStep;
-	}
-	if(!spaceshipCollision) {
-		// Move a Nave
-		spaceship.Tx += spaceship.xStep;
-		spaceship.Ty += spaceship.yStep;
+	if(scene == SCENE_GAME || scene == SCENE_START) {
+		if(bulletExists) {
+			// Move a bala
+			bullet.Tx += bullet.xStep;
+			bullet.Ty += bullet.yStep;
+		}
+		if(!spaceshipCollision) {
+			// Move a Nave
+			spaceship.Tx += spaceship.xStep;
+			spaceship.Ty += spaceship.yStep;
 
-		// Move o Asteroid
-		asteroid.Tx += asteroid.xStep;
-		asteroid.Ty += asteroid.yStep;
+			// Move o Asteroid
+			asteroid.Tx += asteroid.xStep;
+			asteroid.Ty += asteroid.yStep;
+		}
 	}
+
 
 	// Redesenha a Nave em outra posição
 	glutPostRedisplay();
