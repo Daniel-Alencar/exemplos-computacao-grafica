@@ -49,6 +49,7 @@ Object_transformation asteroid;
 Object_transformation asteroid1;
 Object_transformation asteroid2;
 int levelDestructionAsteroid = 0;
+bool notDivided = true;
 
 
 Point pointsNave[POINTS_SPACESHIP];

@@ -116,27 +116,25 @@ void Desenha(void)
 			  DesenhaBala();
 			}
 			
-			// Inicializa a matriz de transformação corrente
-			glLoadIdentity();
 			if(levelDestructionAsteroid == 0) {
+				glLoadIdentity();
 				gluOrtho2D(-range, range, -range, range);
-			} else if(levelDestructionAsteroid == 1) {
-				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
-			}
-
-			// Aplica uma translação sobre o asteroide
-			if(levelDestructionAsteroid == 0) {
 				glTranslatef(asteroid.Tx, asteroid.Ty, 0.0f);
 				DesenhaAsteroide();
 
 			} else if(levelDestructionAsteroid == 1) {
+				printf("AQUIIIIII!\n");
+				glLoadIdentity();
+				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
 				glTranslatef(asteroid1.Tx, asteroid1.Ty, 0.0f);
 				DesenhaAsteroide();
+				
 				glLoadIdentity();
 				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
 				glTranslatef(asteroid2.Tx, asteroid2.Ty, 0.0f);
 				DesenhaAsteroide();
 			}
+			printf("Level de destruição: %d\n", levelDestructionAsteroid);
 
 			break;
 		case SCENE_GAMEOVER:

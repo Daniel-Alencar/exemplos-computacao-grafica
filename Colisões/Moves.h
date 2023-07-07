@@ -44,19 +44,21 @@ void clearSpaceshipMoves() {
 
 void divideAsteroid() {
   levelDestructionAsteroid++;
+  notDivided = false;
 
   asteroid1.angle = asteroid.angle + 30;
   asteroid1.Tx = asteroid.Tx;
   asteroid1.Ty = asteroid.Ty;
-  asteroid1.xStep = asteroid.xStep;
-  asteroid1.yStep = asteroid.yStep;
+  asteroid1.xStep = cos(convertDegreesToRadians(asteroid1.angle)) * ASTEROID_VELOCITY;
+	asteroid1.yStep = sin(convertDegreesToRadians(asteroid1.angle)) * ASTEROID_VELOCITY;
 
   asteroid2.angle = asteroid.angle - 45;
   asteroid2.Tx = asteroid.Tx;
   asteroid2.Ty = asteroid.Ty;
-  asteroid2.xStep = asteroid.xStep;
-  asteroid2.yStep = asteroid.yStep;
+  asteroid2.xStep = cos(convertDegreesToRadians(asteroid2.angle)) * ASTEROID_VELOCITY;
+	asteroid2.yStep = sin(convertDegreesToRadians(asteroid2.angle)) * ASTEROID_VELOCITY;
 }
+
 void draw() {
 	
 	changeSpaceshipTranslation();
@@ -70,7 +72,9 @@ void draw() {
 		if(bulletColision) {
 			printf("Bala colidiu!\n");
 
-      divideAsteroid();
+      if(notDivided) {
+        divideAsteroid();
+      }
 		}
 		if(spaceshipCollision) {
 			printf("Finalização do jogo!\n");
