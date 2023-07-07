@@ -13,7 +13,10 @@ void DrawInitialScreen(const char *string, int y_pos){
 	int windowWidth = glutGet(GLUT_WINDOW_WIDTH);
 	int windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
 	// Define o tamanho do texto
-	float textSizeX = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)text);
+	float textSizeX = glutBitmapLength(
+		GLUT_BITMAP_TIMES_ROMAN_24, 
+		(const unsigned char*)text
+	);
 	// Calcula as coordenadas para centralizar o texto
 	float textPosScreenX = windowWidth / 2 - textSizeX / 2;
 	float textPosX = ((textPosScreenX) * 2 * range) / (windowWidth);

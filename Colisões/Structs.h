@@ -31,6 +31,12 @@ typedef struct {
 
 } Object_transformation;
 
+typedef struct node {
+	Object_transformation asteroid;
+	struct node *left;
+	struct node *right;
+} ASTEROIDS_TREE;
+
 // Variáveis de controle de tela
 
 // Variáveis relacionadas a janela de visualização
@@ -45,6 +51,9 @@ GLfloat windowYmin, windowYmax;
 bool bulletExists = false;
 Object_transformation bullet;
 Object_transformation spaceship;
+
+ASTEROIDS_TREE asteroids;
+
 Object_transformation asteroid;
 Object_transformation asteroid1;
 Object_transformation asteroid2;

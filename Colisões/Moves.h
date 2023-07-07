@@ -1,5 +1,5 @@
 
-void changeSpaceshipTranslation() {
+Object_transformation changeSpaceshipTranslation(Object_transformation spaceship) {
 	// Translação da NAVE
 	// Muda a posição quando chega na borda esquerda e direita
 	if((spaceship.Tx+spaceship.maxX) > windowXmax) {
@@ -13,9 +13,10 @@ void changeSpaceshipTranslation() {
 	} else if((spaceship.Ty+spaceship.minY) < windowYmin) {
 		spaceship.Ty = +range;
 	}
+  return spaceship;
 }
 
-void changeAsteroidTranslation() {
+Object_transformation changeAsteroidTranslation(Object_transformation asteroid) {
 	// Translação do ASTERÓIDE
 	// Muda a posição quando chega na borda esquerda e direita
 	if((asteroid.Tx+asteroid.maxX) > windowXmax) {
@@ -33,16 +34,20 @@ void changeAsteroidTranslation() {
 		printf("Lado de baixo\n");
 		asteroid.Ty = +range + asteroid.maxY;
 	}
+
+  return asteroid;
 }
 
-void clearSpaceshipMoves() {
+Object_transformation clearSpaceshipMoves(Object_transformation spaceship) {
 	spaceship.Tx = 0;
 	spaceship.Ty = 0;
 	spaceship.xStep = 0;
 	spaceship.yStep = 0;
+
+  return spaceship;
 }
 
-void divideAsteroid() {
+void divideAsteroid(Object_transformation asteroid) {
   levelDestructionAsteroid++;
   notDivided = false;
 
@@ -61,8 +66,8 @@ void divideAsteroid() {
 
 void draw() {
 	
-	changeSpaceshipTranslation();
-	changeAsteroidTranslation();
+	spaceship = changeSpaceshipTranslation(spaceship);
+	asteroid = changeAsteroidTranslation(asteroid);
   
   // Verificando colisões
 	if(scene == SCENE_GAME) {
@@ -73,13 +78,13 @@ void draw() {
 			printf("Bala colidiu!\n");
 
       if(notDivided) {
-        divideAsteroid();
+        divideAsteroid(asteroid);
       }
 		}
 		if(spaceshipCollision) {
 			printf("Finalização do jogo!\n");
 
-			clearSpaceshipMoves();
+			spaceship = clearSpaceshipMoves(spaceship);
 			scene = SCENE_GAMEOVER;
 		}
 	}

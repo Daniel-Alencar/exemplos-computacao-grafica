@@ -123,18 +123,14 @@ void Desenha(void)
 				DesenhaAsteroide();
 
 			} else if(levelDestructionAsteroid == 1) {
-				printf("AQUIIIIII!\n");
 				glLoadIdentity();
 				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
+
 				glTranslatef(asteroid1.Tx, asteroid1.Ty, 0.0f);
 				DesenhaAsteroide();
-				
-				glLoadIdentity();
-				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
 				glTranslatef(asteroid2.Tx, asteroid2.Ty, 0.0f);
 				DesenhaAsteroide();
 			}
-			printf("Level de destruição: %d\n", levelDestructionAsteroid);
 
 			break;
 		case SCENE_GAMEOVER:
