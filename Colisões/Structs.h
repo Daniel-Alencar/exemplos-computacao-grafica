@@ -53,10 +53,6 @@ Object_transformation bullet;
 Object_transformation spaceship;
 
 ASTEROIDS_TREE asteroids;
-
-Object_transformation asteroid;
-Object_transformation asteroid1;
-Object_transformation asteroid2;
 int levelDestructionAsteroid = 0;
 bool notDivided = true;
 

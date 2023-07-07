@@ -1,5 +1,4 @@
 
-
 // Função para desenhar a bala
 void DesenhaBala() {
 	glPointSize(5.0f);
@@ -119,16 +118,24 @@ void Desenha(void)
 			if(levelDestructionAsteroid == 0) {
 				glLoadIdentity();
 				gluOrtho2D(-range, range, -range, range);
-				glTranslatef(asteroid.Tx, asteroid.Ty, 0.0f);
+				glTranslatef(asteroids.asteroid.Tx, asteroids.asteroid.Ty, 0.0f);
 				DesenhaAsteroide();
 
 			} else if(levelDestructionAsteroid == 1) {
 				glLoadIdentity();
 				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
 
-				glTranslatef(asteroid1.Tx, asteroid1.Ty, 0.0f);
+				glTranslatef(
+					asteroids.left->asteroid.Tx,
+					asteroids.left->asteroid.Ty, 
+					0.0f
+				);
 				DesenhaAsteroide();
-				glTranslatef(asteroid2.Tx, asteroid2.Ty, 0.0f);
+				glTranslatef(
+					asteroids.right->asteroid.Tx,
+					asteroids.right->asteroid.Ty,
+					0.0f
+				);
 				DesenhaAsteroide();
 			}
 

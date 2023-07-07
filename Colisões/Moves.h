@@ -47,38 +47,54 @@ Object_transformation clearSpaceshipMoves(Object_transformation spaceship) {
   return spaceship;
 }
 
-void divideAsteroid(Object_transformation asteroid) {
+void divideAsteroid(ASTEROIDS_TREE *asteroids) {
   levelDestructionAsteroid++;
   notDivided = false;
+  asteroids->left = (ASTEROIDS_TREE *)malloc(sizeof(ASTEROIDS_TREE));
+  asteroids->right = (ASTEROIDS_TREE *)malloc(sizeof(ASTEROIDS_TREE));
 
-  asteroid1.angle = asteroid.angle + 30;
-  asteroid1.Tx = asteroid.Tx;
-  asteroid1.Ty = asteroid.Ty;
-  asteroid1.xStep = cos(convertDegreesToRadians(asteroid1.angle)) * ASTEROID_VELOCITY;
-	asteroid1.yStep = sin(convertDegreesToRadians(asteroid1.angle)) * ASTEROID_VELOCITY;
+  asteroids->left->asteroid.angle = asteroids->asteroid.angle + 30;
+  asteroids->left->asteroid.Tx = asteroids->asteroid.Tx;
+  asteroids->left->asteroid.Ty = asteroids->asteroid.Ty;
+  asteroids->left->asteroid.xStep = cos(
+    convertDegreesToRadians(asteroids->left->asteroid.angle)
+  ) * ASTEROID_VELOCITY;
+	asteroids->left->asteroid.yStep = sin(
+    convertDegreesToRadians(asteroids->left->asteroid.angle)
+  ) * ASTEROID_VELOCITY;
 
-  asteroid2.angle = asteroid.angle - 45;
-  asteroid2.Tx = asteroid.Tx;
-  asteroid2.Ty = asteroid.Ty;
-  asteroid2.xStep = cos(convertDegreesToRadians(asteroid2.angle)) * ASTEROID_VELOCITY;
-	asteroid2.yStep = sin(convertDegreesToRadians(asteroid2.angle)) * ASTEROID_VELOCITY;
+  asteroids->right->asteroid.angle = asteroids->asteroid.angle - 45;
+  asteroids->right->asteroid.Tx = asteroids->asteroid.Tx;
+  asteroids->right->asteroid.Ty = asteroids->asteroid.Ty;
+  asteroids->right->asteroid.xStep = cos(
+    convertDegreesToRadians(asteroids->right->asteroid.angle)
+  ) * ASTEROID_VELOCITY;
+	asteroids->right->asteroid.yStep = sin(
+    convertDegreesToRadians(asteroids->right->asteroid.angle)
+  ) * ASTEROID_VELOCITY;
 }
 
 void draw() {
 	
 	spaceship = changeSpaceshipTranslation(spaceship);
-	asteroid = changeAsteroidTranslation(asteroid);
+	asteroids.asteroid = changeAsteroidTranslation(asteroids.asteroid);
   
   // Verificando colisões
 	if(scene == SCENE_GAME) {
-		spaceshipCollision = verifySpaceshipCollision();
-		bulletColision = verifyBulletCollision();
+		spaceshipCollision = verifySpaceshipCollision(
+      asteroids.asteroid,
+      spaceship
+    );
+		bulletColision = verifyBulletCollision(
+      asteroids.asteroid,
+      bullet
+    );
 		
 		if(bulletColision) {
 			printf("Bala colidiu!\n");
 
       if(notDivided) {
-        divideAsteroid(asteroid);
+        divideAsteroid(&asteroids);
       }
 		}
 		if(spaceshipCollision) {
@@ -104,15 +120,15 @@ void draw() {
 
     // Move o Asteroid
     if(levelDestructionAsteroid == 0) {
-      asteroid.Tx += asteroid.xStep;
-      asteroid.Ty += asteroid.yStep;
+      asteroids.asteroid.Tx += asteroids.asteroid.xStep;
+      asteroids.asteroid.Ty += asteroids.asteroid.yStep;
 
     } else if(levelDestructionAsteroid == 1) {
-      asteroid1.Tx += asteroid1.xStep;
-      asteroid1.Ty += asteroid1.yStep;
+      asteroids.left->asteroid.Tx += asteroids.left->asteroid.xStep;
+      asteroids.left->asteroid.Ty += asteroids.left->asteroid.yStep;
 
-      asteroid2.Tx += asteroid2.xStep;
-      asteroid2.Ty += asteroid2.yStep;
+      asteroids.right->asteroid.Tx += asteroids.right->asteroid.xStep;
+      asteroids.right->asteroid.Ty += asteroids.right->asteroid.yStep;
     }
 	}
 }
