@@ -78,7 +78,7 @@ void Desenha(void)
 		case SCENE_MENU:
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
-			DrawInitialScreen("Click 'e' to change color", 0);
+			DrawInitialScreen("Click 'E' to change color", 0);
 			DrawInitialScreen("Pedro Amaro", -7);
 			DrawInitialScreen("Daniel Alencar", -9);
 			break;
@@ -86,14 +86,7 @@ void Desenha(void)
 		case SCENE_START:
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
-			DrawInitialScreen("Click 'space' to start", -5);
-
-
-			// Inicializa a matriz de transformação corrente
-			// glLoadIdentity();
-			// gluOrtho2D(-range, range, -range, range);
-
-			// DesenhaPontosDeReferencia();
+			DrawInitialScreen("Click 'SPACE' to start", -5);
 
 		case SCENE_GAME:
 			// Inicializa a matriz de transformação corrente
@@ -101,7 +94,7 @@ void Desenha(void)
 			gluOrtho2D(-range, range, -range, range);
 			
 			if(scene == SCENE_GAME)
-				drawText("Click 'esc' to pause", -20, 20);	
+				drawText("Click 'ESC' to pause", -25, 23);	
 
 			// Aplica uma translação sobre a Nave
 			glTranslatef(spaceship.Tx, spaceship.Ty, 0.0f);
@@ -122,15 +115,29 @@ void Desenha(void)
 			if(bulletExists) {
 			  DesenhaBala();
 			}
-
+			
 			// Inicializa a matriz de transformação corrente
 			glLoadIdentity();
-			gluOrtho2D(-range, range, -range, range);
+			if(levelDestructionAsteroid == 0) {
+				gluOrtho2D(-range, range, -range, range);
+			} else if(levelDestructionAsteroid == 1) {
+				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
+			}
 
 			// Aplica uma translação sobre o asteroide
-			glTranslatef(asteroid.Tx, asteroid.Ty, 0.0f);
+			if(levelDestructionAsteroid == 0) {
+				glTranslatef(asteroid.Tx, asteroid.Ty, 0.0f);
+				DesenhaAsteroide();
 
-			DesenhaAsteroide();
+			} else if(levelDestructionAsteroid == 1) {
+				glTranslatef(asteroid1.Tx, asteroid1.Ty, 0.0f);
+				DesenhaAsteroide();
+				glLoadIdentity();
+				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
+				glTranslatef(asteroid2.Tx, asteroid2.Ty, 0.0f);
+				DesenhaAsteroide();
+			}
+
 			break;
 		case SCENE_GAMEOVER:
 			

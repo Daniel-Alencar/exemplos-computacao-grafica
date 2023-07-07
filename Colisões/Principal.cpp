@@ -14,6 +14,7 @@
 #include "Collision.h"
 #include "Util.h"
 #include "Keyboard.h"
+#include "Moves.h"
 
 // Função responsável por inicializar par�metros e variáveis
 void Inicializa (void)
@@ -126,74 +127,7 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 // Função callback chamada pela GLUT a cada intervalo de tempo
 void Anima(int value)
 {
-	// Translação da NAVE
-	// Muda a posição quando chega na borda esquerda e direita
-	if((spaceship.Tx+spaceship.maxX) > windowXmax) {
-		spaceship.Tx = -range;
-	} else if((spaceship.Tx+spaceship.minX) < windowXmin) {
-		spaceship.Tx = +range;
-	}
-	// Muda a posição quando chega na borda superior e inferior
-	if((spaceship.Ty+spaceship.maxY) > windowYmax) {
-		spaceship.Ty = -range;
-	} else if((spaceship.Ty+spaceship.minY) < windowYmin) {
-		spaceship.Ty = +range;
-	}
-
-	// Translação do ASTERÓIDE
-	// Muda a posição quando chega na borda esquerda e direita
-	if((asteroid.Tx+asteroid.maxX) > windowXmax) {
-		printf("Lado direito\n");
-		asteroid.Tx = -range + asteroid.minX;
-	} else if((asteroid.Tx+asteroid.minX) < windowXmin) {
-		printf("Lado esquerdo\n");
-		asteroid.Tx = +range + asteroid.maxX;
-	}
-	// Muda a posição quando chega na borda superior e inferior
-	if((asteroid.Ty+asteroid.maxY) > windowYmax) {
-		printf("Lado de cima\n");
-		asteroid.Ty = -range + asteroid.minY;
-	} else if((asteroid.Ty+asteroid.minY) < windowYmin) {
-		printf("Lado de baixo\n");
-		asteroid.Ty = +range + asteroid.maxY;
-	}
-
-	if(scene != SCENE_START) {
-		spaceshipCollision = verifyIntersects();
-		bulletColision = verifyBullet();
-		
-		if(bulletColision) {
-			printf("Bala colidiu!\n");
-		}
-		if(spaceshipCollision) {
-			printf("Game Over!\n");
-			// Zera variáveis de translação da nave
-			spaceship.Tx = 0;
-			spaceship.Ty = 0;
-			spaceship.xStep = 0;
-			spaceship.yStep = 0;
-
-			scene = SCENE_GAMEOVER;
-		}
-	}
-
-	if(scene == SCENE_GAME || scene == SCENE_START) {
-		if(bulletExists) {
-			// Move a bala
-			bullet.Tx += bullet.xStep;
-			bullet.Ty += bullet.yStep;
-		}
-		if(!spaceshipCollision) {
-			// Move a Nave
-			spaceship.Tx += spaceship.xStep;
-			spaceship.Ty += spaceship.yStep;
-
-			// Move o Asteroid
-			asteroid.Tx += asteroid.xStep;
-			asteroid.Ty += asteroid.yStep;
-		}
-	}
-
+	draw();
 
 	// Redesenha a Nave em outra posição
 	glutPostRedisplay();

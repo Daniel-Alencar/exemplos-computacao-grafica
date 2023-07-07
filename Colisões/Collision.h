@@ -82,7 +82,7 @@ bool detectColision(GLfloat x1, GLfloat y1, GLfloat r1,
 	return true;
 }
 
-bool verifyIntersects() {
+bool verifySpaceshipCollision() {
 	for(int i = 0; i < POINTS_SPACESHIP; i++) {
 		for(int j = 0; j < POINTS_ASTEROID; j++) {
 			Point nave_point1 = { 
@@ -110,7 +110,7 @@ bool verifyIntersects() {
 	return false;
 }
 
-bool verifyBullet() {
+bool verifyBulletCollision() {
   for(int j = 0; j < POINTS_ASTEROID; j++) {
     Point asteroid_point1 = { 
       pointsAsteroid[j].x + asteroid.Tx, pointsAsteroid[j].y + asteroid.Ty 

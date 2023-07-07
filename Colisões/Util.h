@@ -8,6 +8,5 @@ float generateRandomFloat() {
 	srand(time(NULL));
 
 	float random = ((float)rand() / RAND_MAX);
-	printf("random: %f\n", random);
 	return random;
 }
