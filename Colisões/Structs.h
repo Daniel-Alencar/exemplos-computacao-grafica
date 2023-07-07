@@ -1,12 +1,22 @@
 #include <GL/glut.h>
 
+// Pontos de desenho
 #define POINTS_SPACESHIP 3
 #define POINTS_ASTEROID 10
 
+// Cenas
 #define SCENE_MENU 0
 #define SCENE_START 1
 #define SCENE_GAME 2
 #define SCENE_GAMEOVER 3
+
+// Valores de controle
+#define ASTEROID_VELOCITY 0.010f
+#define ASTEROID_RANGE_ANGLES 360
+
+#define SPACESHIP_ACCELERATION 0.001f
+#define SPACESHIP_OFFSET_ANGLE 90
+#define SPACESHIP_ANGLE_STEP 8
 
 typedef struct {
 	float x;

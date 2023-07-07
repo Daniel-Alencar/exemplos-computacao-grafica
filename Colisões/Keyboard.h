@@ -18,29 +18,41 @@ void Teclado (unsigned char key, int x, int y)
 		bullet.Ty = spaceship.Ty;
 		// Tiro
 		bulletExists = true;
-		bullet.xStep = cos(convertDegreesToRadians(spaceship.angle + 90)) * 0.030f;
-		bullet.yStep = sin(convertDegreesToRadians(spaceship.angle + 90)) * 0.030f;
+		bullet.xStep = cos(convertDegreesToRadians(
+			spaceship.angle + SPACESHIP_OFFSET_ANGLE
+		)) * 0.030f;
+		bullet.yStep = sin(convertDegreesToRadians(
+			spaceship.angle + SPACESHIP_OFFSET_ANGLE
+		)) * 0.030f;
 		printf("Atirou!\n");
 	}
 
 	if(scene != SCENE_START) {
 		if(key == 'w' || key == 'W') {
 			// Lógica para mover para "cima"
-			spaceship.xStep += +cos(convertDegreesToRadians(spaceship.angle + 90)) * 0.001f;
-			spaceship.yStep += +sin(convertDegreesToRadians(spaceship.angle + 90)) * 0.001f;
+			spaceship.xStep += 
+				+cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE))
+				*SPACESHIP_ACCELERATION;
+			spaceship.yStep += 
+				+sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+				*SPACESHIP_ACCELERATION;
 		}
 		if(key == 'a' || key == 'A') {
 			// Lógica para mover para a esquerda
-			spaceship.angle+=5;
+			spaceship.angle+=SPACESHIP_ANGLE_STEP;
 		}
 		if(key == 's' || key == 'S') {
 			// Lógica para mover para "baixo"
-			spaceship.xStep += -cos(convertDegreesToRadians(spaceship.angle + 90)) * 0.001f;
-			spaceship.yStep += -sin(convertDegreesToRadians(spaceship.angle + 90)) * 0.001f;
+			spaceship.xStep += 
+				-cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+				*SPACESHIP_ACCELERATION;
+			spaceship.yStep += 
+				-sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+				*SPACESHIP_ACCELERATION;
 		}
 		if(key == 'd' || key == 'D') {
 			// Lógica para mover para a direita
-			spaceship.angle-=5;
+			spaceship.angle-=SPACESHIP_ANGLE_STEP;
 		}
 	}
 

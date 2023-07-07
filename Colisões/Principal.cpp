@@ -21,15 +21,13 @@ void Inicializa (void)
 	// Define a cor de fundo da janela de visualização
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-  // Inicialização das variáveis globais
+	// Pontos de desenho
 	Point p1_nave = {+0.0, +1.5};
 	Point p2_nave = {+1.0, -1.0};
 	Point p3_nave = {-1.0, -1.0};
 	pointsNave[0] = p1_nave;
 	pointsNave[1] = p2_nave;
 	pointsNave[2] = p3_nave;
-
-
 
 	float dimension1 = 2.1875;
 	float dimension2 = 4.375;
@@ -58,30 +56,34 @@ void Inicializa (void)
 	pointsAsteroid[8] = p09_asteroid;
 	pointsAsteroid[9] = p10_asteroid;
 
+	// Variáveis da nave
 	spaceship.angle = 0;
-
 	spaceship.xStep = spaceship.yStep = 0.00f;
 	spaceship.Tx = spaceship.Ty = 0.0f;
-
-	asteroid.xStep = -0.000f;
-	asteroid.yStep = +0.010f;
-
-	asteroid.Tx = -range + generateRandomFloat() * 50;
-	asteroid.Ty = -range + generateRandomFloat() * 50;
-
-	bullet.xStep = bullet.yStep = 0.00f;
-	bullet.Tx = bullet.Ty = 0.0f;
 
 	spaceship.minX = -7.0f;
 	spaceship.maxX = +7.0f;
 	spaceship.minY = -7.0f;
 	spaceship.maxY = +7.0f;
 
+	// Variáveis do asteróide
+	asteroid.angle = generateRandomFloat() * 360;
+
+	asteroid.xStep = cos(convertDegreesToRadians(asteroid.angle)) * ASTEROID_VELOCITY;
+	asteroid.yStep = sin(convertDegreesToRadians(asteroid.angle)) * ASTEROID_VELOCITY;
+	asteroid.Tx = -range + generateRandomFloat() * (range * 2);
+	asteroid.Ty = -range + generateRandomFloat() * (range * 2);
+
 	asteroid.minX = -7.0f;
 	asteroid.maxX = +7.0f;
 	asteroid.minY = -7.0f;
 	asteroid.maxY = +7.0f;
 
+	// Variáveis da bala
+	bullet.xStep = bullet.yStep = 0.00f;
+	bullet.Tx = bullet.Ty = 0.0f;
+
+	// Variáveis da tela
 	windowXmin = windowYmin = -40.0f;
 	windowXmax = windowYmax = +40.0f;
     
