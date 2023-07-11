@@ -22,6 +22,19 @@ void DesenhaNave()
 	glEnd();
 }
 
+void handleSize(int i){
+	i++;
+
+	int level = (int)log2(i);
+	printf("Level: %d\n", level);
+	
+	if(level == 0){
+		gluOrtho2D(-range, range, -range, range);
+	}else{
+		gluOrtho2D(-range*(1.5*level), range*(1.5*level), -range*(1.5*level), range*(1.5*level));
+	}
+}
+
 // Função para desenhar um asteróide
 void DesenhaAsteroide() {
 	glLineWidth(2);
@@ -77,7 +90,7 @@ void Desenha(void)
 		case SCENE_MENU:
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
-			DrawInitialScreen("Click 'E' to change color", 0);
+			DrawInitialScreen("Press 'E' to change color", 0);
 			DrawInitialScreen("Pedro Amaro", -7);
 			DrawInitialScreen("Daniel Alencar", -9);
 			break;
@@ -85,7 +98,7 @@ void Desenha(void)
 		case SCENE_START:
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
-			DrawInitialScreen("Click 'SPACE' to start", -5);
+			DrawInitialScreen("Press 'SPACE' to start", -5);
 
 		case SCENE_GAME:
 			// Inicializa a matriz de transformação corrente
@@ -93,7 +106,7 @@ void Desenha(void)
 			gluOrtho2D(-range, range, -range, range);
 			
 			if(scene == SCENE_GAME){
-				drawText("Click 'ESC' to pause", -25, 23);
+				drawText("Press 'ESC' to pause", -25, 23);
 
 				for( int i = 0; i < lives; i++){
 					glLoadIdentity();
@@ -119,34 +132,27 @@ void Desenha(void)
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
 
-			// Aplica uma translação sobre a Nave
+			// Aplica uma translação sobre a bala
 			glTranslatef(bullet.Tx, bullet.Ty, 0.0f);
 			if(bulletExists) {
 			  DesenhaBala();
 			}
 			
-			if(levelDestructionAsteroid == 0) {
-				glLoadIdentity();
-				gluOrtho2D(-range, range, -range, range);
-				glTranslatef(asteroids.asteroid.Tx, asteroids.asteroid.Ty, 0.0f);
-				DesenhaAsteroide();
+			// Desenha os asteroides
+			winCondition = true;
+			for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
+				if(asteroidsArray[i].enable) {
+					winCondition = false;
+					glLoadIdentity();
+					// handleSize(i);
+					gluOrtho2D(-range, range, -range, range);
 
-			} else if(levelDestructionAsteroid == 1) {
-				glLoadIdentity();
-				gluOrtho2D(-range * 1.5, range * 1.5, -range * 1.5, range * 1.5);
-
-				glTranslatef(
-					asteroids.left->asteroid.Tx,
-					asteroids.left->asteroid.Ty, 
-					0.0f
-				);
-				DesenhaAsteroide();
-				glTranslatef(
-					asteroids.right->asteroid.Tx,
-					asteroids.right->asteroid.Ty,
-					0.0f
-				);
-				DesenhaAsteroide();
+					glTranslatef(asteroidsArray[i].Tx, asteroidsArray[i].Ty, 0.0f);
+					DesenhaAsteroide();
+				}
+			}
+			if(winCondition){
+				scene = SCENE_WIN;
 			}
 
 			break;
@@ -158,6 +164,15 @@ void Desenha(void)
 
 			DrawInitialScreen("GAME OVER", 0);
 			break;
+			
+		case SCENE_WIN:
+			// Inicializa a matriz de transformação corrente
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
+
+			DrawInitialScreen("YOU WON!", 0);
+			break;
+			
 		default:
 			break;
 	}

@@ -68,17 +68,19 @@ void Inicializa (void)
 	spaceship.maxY = +7.0f;
 
 	// Variáveis do asteróide
-	asteroids.asteroid.angle = generateRandomFloat() * 360;
+	
+	asteroidsArray[0].enable = true;
+	asteroidsArray[0].angle = generateRandomFloat() * 360;
 
-	asteroids.asteroid.xStep = cos(convertDegreesToRadians(asteroids.asteroid.angle)) * ASTEROID_VELOCITY;
-	asteroids.asteroid.yStep = sin(convertDegreesToRadians(asteroids.asteroid.angle)) * ASTEROID_VELOCITY;
-	asteroids.asteroid.Tx = -range + generateRandomFloat() * (range * 2);
-	asteroids.asteroid.Ty = -range + generateRandomFloat() * (range * 2);
+	asteroidsArray[0].xStep = cos(convertDegreesToRadians(asteroidsArray[0].angle)) * ASTEROID_VELOCITY;
+	asteroidsArray[0].yStep = sin(convertDegreesToRadians(asteroidsArray[0].angle)) * ASTEROID_VELOCITY;
+	asteroidsArray[0].Tx = -range + generateRandomFloat() * (range * 2);
+	asteroidsArray[0].Ty = -range + generateRandomFloat() * (range * 2);
 
-	asteroids.asteroid.minX = -7.0f;
-	asteroids.asteroid.maxX = +7.0f;
-	asteroids.asteroid.minY = -7.0f;
-	asteroids.asteroid.maxY = +7.0f;
+	asteroidsArray[0].minX = -7.0f;
+	asteroidsArray[0].maxX = +7.0f;
+	asteroidsArray[0].minY = -7.0f;
+	asteroidsArray[0].maxY = +7.0f;
 
 	// Variáveis da bala
 	bullet.xStep = bullet.yStep = 0.00f;

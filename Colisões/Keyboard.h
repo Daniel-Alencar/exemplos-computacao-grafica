@@ -14,16 +14,19 @@ void Teclado (unsigned char key, int x, int y)
 			scene = SCENE_GAME;
 		}
 
+		bulletExists = true;
+
 		bullet.Tx = spaceship.Tx;
 		bullet.Ty = spaceship.Ty;
+
 		// Tiro
-		bulletExists = true;
 		bullet.xStep = cos(convertDegreesToRadians(
 			spaceship.angle + SPACESHIP_OFFSET_ANGLE
-		)) * 0.030f;
+		)) * BULLET_SPEED;
 		bullet.yStep = sin(convertDegreesToRadians(
 			spaceship.angle + SPACESHIP_OFFSET_ANGLE
-		)) * 0.030f;
+		)) * BULLET_SPEED;
+
 		printf("Atirou!\n");
 	}
 

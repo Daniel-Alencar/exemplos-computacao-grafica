@@ -47,72 +47,60 @@ Object_transformation clearSpaceshipMoves(Object_transformation spaceship) {
   return spaceship;
 }
 
-void divideAsteroid(ASTEROIDS_TREE *asteroids) {
-  levelDestructionAsteroid++;
-  notDivided = false;
-  asteroids->left = (ASTEROIDS_TREE *)malloc(sizeof(ASTEROIDS_TREE));
-  asteroids->right = (ASTEROIDS_TREE *)malloc(sizeof(ASTEROIDS_TREE));
+void updateLives(){
+	lives--;
+	if(lives == 0) {
+		printf("Finalização do jogo!\n");
 
-  asteroids->left->asteroid.angle = asteroids->asteroid.angle + 30;
-  asteroids->left->asteroid.Tx = asteroids->asteroid.Tx;
-  asteroids->left->asteroid.Ty = asteroids->asteroid.Ty;
-  asteroids->left->asteroid.xStep = cos(
-    convertDegreesToRadians(asteroids->left->asteroid.angle)
-  ) * ASTEROID_VELOCITY;
-	asteroids->left->asteroid.yStep = sin(
-    convertDegreesToRadians(asteroids->left->asteroid.angle)
-  ) * ASTEROID_VELOCITY;
-
-  asteroids->right->asteroid.angle = asteroids->asteroid.angle - 45;
-  asteroids->right->asteroid.Tx = asteroids->asteroid.Tx;
-  asteroids->right->asteroid.Ty = asteroids->asteroid.Ty;
-  asteroids->right->asteroid.xStep = cos(
-    convertDegreesToRadians(asteroids->right->asteroid.angle)
-  ) * ASTEROID_VELOCITY;
-	asteroids->right->asteroid.yStep = sin(
-    convertDegreesToRadians(asteroids->right->asteroid.angle)
-  ) * ASTEROID_VELOCITY;
+		spaceship = clearSpaceshipMoves(spaceship);
+		scene = SCENE_GAMEOVER;
+	} else {
+		printf("TOMOU DANO\n");
+		spaceship = clearSpaceshipMoves(spaceship);
+	}
 }
 
 void draw() {
-	
+	// Nave nas bordas da tela
 	spaceship = changeSpaceshipTranslation(spaceship);
-	asteroids.asteroid = changeAsteroidTranslation(asteroids.asteroid);
+
+	// Asteroides nas bordas da tela
+	for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
+		if(asteroidsArray[i].enable) {
+			asteroidsArray[i] = changeAsteroidTranslation(asteroidsArray[i]);
+		}
+	}
   
   // Verificando colisões
 	if(scene == SCENE_GAME) {
-		spaceshipCollision = verifySpaceshipCollision(
-      asteroids.asteroid,
-      spaceship
-    );
-		bulletColision = verifyBulletCollision(
-      asteroids.asteroid,
-      bullet
-    );
+
+		for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
+			if(asteroidsArray[i].enable) {
+				
+				bulletColision = verifyBulletCollision(
+					asteroidsArray[i],
+					bullet
+				);
+				spaceshipCollision = verifySpaceshipCollision(
+					asteroidsArray[i],
+					spaceship
+				);
+
+				if(bulletColision) {
+					printf("Bala colidiu!\n");
+					bulletExists = false;
+
+					divideAsteroid(i);
+				}
+				if(spaceshipCollision) {
+					updateLives();
+					break;
+				}
+
+			}
+		}
 		
-		if(bulletColision) {
-			printf("Bala colidiu!\n");
-
-      if(notDivided) {
-        divideAsteroid(&asteroids);
-      }
-		}
-		if(spaceshipCollision) {
-			lives--;
-			if (lives == 0)
-			{
-				printf("Finalização do jogo!\n");
-
-				spaceship = clearSpaceshipMoves(spaceship);
-				scene = SCENE_GAMEOVER;
-			}
-			else
-			{
-				printf("TOMO DANO\n");
-				spaceship = clearSpaceshipMoves(spaceship);
-			}
-			
-		}
+		
 	}
 
   // Movimentando objetos
@@ -128,17 +116,12 @@ void draw() {
     spaceship.Tx += spaceship.xStep;
     spaceship.Ty += spaceship.yStep;
 
-    // Move o Asteroid
-    if(levelDestructionAsteroid == 0) {
-      asteroids.asteroid.Tx += asteroids.asteroid.xStep;
-      asteroids.asteroid.Ty += asteroids.asteroid.yStep;
-
-    } else if(levelDestructionAsteroid == 1) {
-      asteroids.left->asteroid.Tx += asteroids.left->asteroid.xStep;
-      asteroids.left->asteroid.Ty += asteroids.left->asteroid.yStep;
-
-      asteroids.right->asteroid.Tx += asteroids.right->asteroid.xStep;
-      asteroids.right->asteroid.Ty += asteroids.right->asteroid.yStep;
-    }
+    // Move os Asteroids
+		for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
+			if(asteroidsArray[i].enable) {
+				asteroidsArray[i].Tx += asteroidsArray[i].xStep;
+				asteroidsArray[i].Ty += asteroidsArray[i].yStep;
+			}
+		}
 	}
 }

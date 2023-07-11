@@ -9,6 +9,7 @@
 #define SCENE_START 1
 #define SCENE_GAME 2
 #define SCENE_GAMEOVER 3
+#define SCENE_WIN 4
 
 // Valores de controle
 #define ASTEROID_VELOCITY 0.010f
@@ -17,6 +18,8 @@
 #define SPACESHIP_ACCELERATION 0.001f
 #define SPACESHIP_OFFSET_ANGLE 90
 #define SPACESHIP_ANGLE_STEP 8
+
+#define BULLET_SPEED 0.030f
 
 typedef struct {
 	float x;
@@ -44,6 +47,7 @@ typedef struct node {
 GLfloat tx = 0;
 GLfloat win = 25;
 int range = 25;
+
 // Variáveis que guardam a largura e altura da janela
 GLfloat windowXmin, windowXmax;
 GLfloat windowYmin, windowYmax;
@@ -53,9 +57,9 @@ bool bulletExists = false;
 Object_transformation bullet;
 Object_transformation spaceship;
 
-ASTEROIDS_TREE asteroids;
-int levelDestructionAsteroid = 0;
-bool notDivided = true;
+// ASTEROIDS_TREE asteroids;
+// int levelDestructionAsteroid = 0;
+// bool notDivided = true;
 
 
 Point pointsNave[POINTS_SPACESHIP];
@@ -66,6 +70,7 @@ bool spaceshipCollision = false;
 bool bulletColision = false;
 int scene = SCENE_START;
 int lives = 3;
+bool winCondition = false;
 
 int currentColor = 0;
 float redValue = 1.0f;
@@ -93,8 +98,10 @@ int getRightChildrenIndex(int asteroidIndex) {
 }
 
 void divideAsteroid(int asteroidIndex) {
+
 	int left = getLeftChildrenIndex(asteroidIndex);
 	int right = getRightChildrenIndex(asteroidIndex);
+	printf("Left: %d e Right: %d\n", left, right);
 
 	// Habilitando/Desabilitando asteroides
 	asteroidsArray[asteroidIndex].enable = false;

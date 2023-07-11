@@ -117,24 +117,26 @@ bool verifyBulletCollision(
 	Object_transformation asteroid,
 	Object_transformation bullet
 ) {
-  for(int j = 0; j < POINTS_ASTEROID; j++) {
-    Point asteroid_point1 = { 
-      pointsAsteroid[j].x + asteroid.Tx, pointsAsteroid[j].y + asteroid.Ty 
-    };
-    Point asteroid_point2 = { 
-      pointsAsteroid[(j+1)%POINTS_ASTEROID].x + asteroid.Tx,
-      pointsAsteroid[(j+1)%POINTS_ASTEROID].y + asteroid.Ty 
-    };
+	if(bulletExists){
+		for(int j = 0; j < POINTS_ASTEROID; j++) {
+			Point asteroid_point1 = { 
+				pointsAsteroid[j].x + asteroid.Tx, pointsAsteroid[j].y + asteroid.Ty 
+			};
+			Point asteroid_point2 = { 
+				pointsAsteroid[(j+1)%POINTS_ASTEROID].x + asteroid.Tx,
+				pointsAsteroid[(j+1)%POINTS_ASTEROID].y + asteroid.Ty 
+			};
 
-    Point bulletPoint1 = {bullet.Tx, bullet.Ty};
-    Point bulletPoint2 = {bullet.Tx * 1.1f, bullet.Ty * 1.1f};
+			Point bulletPoint1 = {bullet.Tx, bullet.Ty};
+			Point bulletPoint2 = {bullet.Tx * 1.1f, bullet.Ty * 1.1f};
 
-    if(doIntersect(
-      bulletPoint1, bulletPoint2,
-      asteroid_point1, asteroid_point2
-    )) {
-      return true;
-    }
-  }
-  return false;
+			if(doIntersect(
+				bulletPoint1, bulletPoint2,
+				asteroid_point1 , asteroid_point2
+			)) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
