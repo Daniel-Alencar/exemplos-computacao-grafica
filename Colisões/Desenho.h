@@ -92,9 +92,19 @@ void Desenha(void)
 			glLoadIdentity();
 			gluOrtho2D(-range, range, -range, range);
 			
-			if(scene == SCENE_GAME)
-				drawText("Click 'ESC' to pause", -25, 23);	
+			if(scene == SCENE_GAME){
+				drawText("Click 'ESC' to pause", -25, 23);
 
+				for( int i = 0; i < lives; i++){
+					glLoadIdentity();
+					gluOrtho2D(-range, range, -range, range);
+					glTranslatef(23 -3*i, 23, 0.0f);
+					DesenhaNave();
+				}
+			}
+					
+			glLoadIdentity();
+			gluOrtho2D(-range, range, -range, range);
 			// Aplica uma translação sobre a Nave
 			glTranslatef(spaceship.Tx, spaceship.Ty, 0.0f);
 

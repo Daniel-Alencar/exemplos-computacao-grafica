@@ -8,11 +8,11 @@
 #include <GL/glut.h>
 #include <math.h>
 
+#include "Util.h"
 #include "Structs.h"
 #include "Menu.h"
 #include "Desenho.h"
 #include "Collision.h"
-#include "Util.h"
 #include "Keyboard.h"
 #include "Moves.h"
 

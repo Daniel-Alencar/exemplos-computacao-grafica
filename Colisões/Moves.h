@@ -98,10 +98,20 @@ void draw() {
       }
 		}
 		if(spaceshipCollision) {
-			printf("Finalização do jogo!\n");
+			lives--;
+			if (lives == 0)
+			{
+				printf("Finalização do jogo!\n");
 
-			spaceship = clearSpaceshipMoves(spaceship);
-			scene = SCENE_GAMEOVER;
+				spaceship = clearSpaceshipMoves(spaceship);
+				scene = SCENE_GAMEOVER;
+			}
+			else
+			{
+				printf("TOMO DANO\n");
+				spaceship = clearSpaceshipMoves(spaceship);
+			}
+			
 		}
 	}
 
