@@ -22,33 +22,29 @@ void DesenhaNave()
 	glEnd();
 }
 
-void handleSize(int i){
+int handleSize(int i){
 	i++;
 
 	int level = (int)log2(i);
 	printf("Level: %d\n", level);
-	
-	if(level == 0){
-		gluOrtho2D(-range, range, -range, range);
-	}else{
-		gluOrtho2D(-range*(1.5*level), range*(1.5*level), -range*(1.5*level), range*(1.5*level));
-	}
+
+	return level + 1;
 }
 
 // Função para desenhar um asteróide
-void DesenhaAsteroide() {
+void DesenhaAsteroide(int size) {
 	glLineWidth(2);
 	glBegin(GL_LINE_LOOP);
-		glVertex2f(pointsAsteroid[0].x, pointsAsteroid[0].y);
-		glVertex2f(pointsAsteroid[1].x, pointsAsteroid[1].y);
-		glVertex2f(pointsAsteroid[2].x, pointsAsteroid[2].y);
-		glVertex2f(pointsAsteroid[3].x, pointsAsteroid[3].y);
-		glVertex2f(pointsAsteroid[4].x, pointsAsteroid[4].y);
-		glVertex2f(pointsAsteroid[5].x, pointsAsteroid[5].y);
-		glVertex2f(pointsAsteroid[6].x, pointsAsteroid[6].y);
-		glVertex2f(pointsAsteroid[7].x, pointsAsteroid[7].y);
-		glVertex2f(pointsAsteroid[8].x, pointsAsteroid[8].y);
-		glVertex2f(pointsAsteroid[9].x, pointsAsteroid[9].y);
+		glVertex2f(pointsAsteroid[0].x / size, pointsAsteroid[0].y / size);
+		glVertex2f(pointsAsteroid[1].x / size, pointsAsteroid[1].y / size);
+		glVertex2f(pointsAsteroid[2].x / size, pointsAsteroid[2].y / size);
+		glVertex2f(pointsAsteroid[3].x / size, pointsAsteroid[3].y / size);
+		glVertex2f(pointsAsteroid[4].x / size, pointsAsteroid[4].y / size);
+		glVertex2f(pointsAsteroid[5].x / size, pointsAsteroid[5].y / size);
+		glVertex2f(pointsAsteroid[6].x / size, pointsAsteroid[6].y / size);
+		glVertex2f(pointsAsteroid[7].x / size, pointsAsteroid[7].y / size);
+		glVertex2f(pointsAsteroid[8].x / size, pointsAsteroid[8].y / size);
+		glVertex2f(pointsAsteroid[9].x / size, pointsAsteroid[9].y / size);
 	glEnd();
 	glPointSize(1);
 	glBegin(GL_POINTS);
@@ -144,11 +140,19 @@ void Desenha(void)
 				if(asteroidsArray[i].enable) {
 					winCondition = false;
 					glLoadIdentity();
-					// handleSize(i);
 					gluOrtho2D(-range, range, -range, range);
 
-					glTranslatef(asteroidsArray[i].Tx, asteroidsArray[i].Ty, 0.0f);
-					DesenhaAsteroide();
+					if(true) {
+						int size = handleSize(i);
+						glTranslatef(asteroidsArray[i].Tx, asteroidsArray[i].Ty, 0.0f);
+						DesenhaAsteroide(size);
+						
+						glLoadIdentity();
+					} else {
+						glTranslatef(asteroidsArray[i].Tx, asteroidsArray[i].Ty, 0.0f);
+						DesenhaAsteroide(1);
+					}
+
 				}
 			}
 			if(winCondition){

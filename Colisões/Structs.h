@@ -15,7 +15,7 @@
 #define ASTEROID_VELOCITY 0.010f
 #define ASTEROID_RANGE_ANGLES 360
 
-#define SPACESHIP_ACCELERATION 0.001f
+#define SPACESHIP_ACCELERATION 0.005f
 #define SPACESHIP_OFFSET_ANGLE 90
 #define SPACESHIP_ANGLE_STEP 8
 
@@ -56,10 +56,6 @@ GLfloat windowYmin, windowYmax;
 bool bulletExists = false;
 Object_transformation bullet;
 Object_transformation spaceship;
-
-// ASTEROIDS_TREE asteroids;
-// int levelDestructionAsteroid = 0;
-// bool notDivided = true;
 
 
 Point pointsNave[POINTS_SPACESHIP];
