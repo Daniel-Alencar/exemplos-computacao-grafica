@@ -85,22 +85,36 @@ void Inicializa (void)
 		);
 	}
 	
-	asteroidsArray[0].enable = true;
-	asteroidsArray[0].angle = generateRandomFloat() * 360;
+	for(int i = 0; i < ASTEROIDS_ARRAY_QUANTITY; i++) {
+		Object_transformation *asteroidsArray = asteroidsArraysArray[i];
 
-	asteroidsArray[0].xStep = cos(convertDegreesToRadians(asteroidsArray[0].angle)) * ASTEROID_VELOCITY;
-	asteroidsArray[0].yStep = sin(convertDegreesToRadians(asteroidsArray[0].angle)) * ASTEROID_VELOCITY;
-	asteroidsArray[0].Tx = -range + generateRandomFloat() * (range * 2);
-	asteroidsArray[0].Ty = -range + generateRandomFloat() * (range * 2);
+		asteroidsArray = clearAsteroidsEnables(asteroidsArray);
 
-	asteroidsArray[0].minX = -7.0f;
-	asteroidsArray[0].maxX = +7.0f;
-	asteroidsArray[0].minY = -7.0f;
-	asteroidsArray[0].maxY = +7.0f;
+		asteroidsArray[0].enable = true;
+		asteroidsArray[0].angle = generateRandomFloat() * 360;
 
-	for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
-		int size = handleSize(i);
-		asteroidsArray[i].size = size;
+		asteroidsArray[0].xStep = cos(
+			convertDegreesToRadians(asteroidsArray[0].angle)
+		) * ASTEROID_VELOCITY;
+		asteroidsArray[0].yStep = sin(
+			convertDegreesToRadians(asteroidsArray[0].angle)
+		) * ASTEROID_VELOCITY;
+		asteroidsArray[0].Tx = -range + generateRandomFloat() * (range * 2);
+		asteroidsArray[0].Ty = -range + generateRandomFloat() * (range * 2);
+
+		asteroidsArray[0].minX = -7.0f;
+		asteroidsArray[0].maxX = +7.0f;
+		asteroidsArray[0].minY = -7.0f;
+		asteroidsArray[0].maxY = +7.0f;
+	}
+
+	for(int i = 0; i < ASTEROIDS_ARRAY_QUANTITY; i++) {
+		Object_transformation *asteroidsArray = asteroidsArraysArray[i];
+
+		for(int j = 0; j < ASTEROIDS_LENGTH_ARRAY; j++) {
+			int size = handleSize(j);
+			asteroidsArray[j].size = size;
+		}
 	}
 
 	// Variáveis da bala
@@ -168,6 +182,8 @@ void Anima(int value)
 // Programa Principal 
 int main(int argc, char** argv)
 {
+	srand(time(NULL));
+	
   glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);  
 	glutInitWindowPosition(5,5);     

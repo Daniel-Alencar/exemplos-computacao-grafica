@@ -65,38 +65,46 @@ void draw() {
 	spaceship = changeSpaceshipTranslation(spaceship);
 
 	// Asteroides nas bordas da tela
-	for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
-		if(asteroidsArray[i].enable) {
-			asteroidsArray[i] = changeAsteroidTranslation(asteroidsArray[i]);
+	for(int j = 0; j < ASTEROIDS_ARRAY_QUANTITY; j++) {
+		Object_transformation *asteroidsArray = asteroidsArraysArray[j];
+
+		for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
+			if(asteroidsArray[i].enable) {
+				asteroidsArray[i] = changeAsteroidTranslation(asteroidsArray[i]);
+			}
 		}
 	}
   
   // Verificando colisões
 	if(scene == SCENE_GAME) {
 
-		for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
-			if(asteroidsArray[i].enable) {
-				
-				bulletColision = verifyBulletCollision(
-					asteroidsArray[i],
-					bullet
-				);
-				spaceshipCollision = verifySpaceshipCollision(
-					asteroidsArray[i],
-					spaceship
-				);
+		for(int j = 0; j < ASTEROIDS_ARRAY_QUANTITY; j++) {
+			Object_transformation *asteroidsArray = asteroidsArraysArray[j];
 
-				if(bulletColision) {
-					printf("Bala colidiu!\n");
-					bulletExists = false;
+			for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
+				if(asteroidsArray[i].enable) {
+					
+					bulletColision = verifyBulletCollision(
+						asteroidsArray[i],
+						bullet
+					);
+					spaceshipCollision = verifySpaceshipCollision(
+						asteroidsArray[i],
+						spaceship
+					);
 
-					divideAsteroid(i, asteroidsArray);
+					if(bulletColision) {
+						printf("Bala colidiu!\n");
+						bulletExists = false;
+
+						asteroidsArray = divideAsteroid(i, asteroidsArray);
+					}
+					if(spaceshipCollision) {
+						updateLives();
+						break;
+					}
+
 				}
-				if(spaceshipCollision) {
-					updateLives();
-					break;
-				}
-
 			}
 		}
 	}
@@ -121,10 +129,14 @@ void draw() {
 		}
 
     // Move os Asteroids
-		for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
-			if(asteroidsArray[i].enable) {
-				asteroidsArray[i].Tx += asteroidsArray[i].xStep;
-				asteroidsArray[i].Ty += asteroidsArray[i].yStep;
+		for(int j = 0; j < ASTEROIDS_ARRAY_QUANTITY; j++) {
+			Object_transformation *asteroidsArray = asteroidsArraysArray[j];
+
+			for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
+				if(asteroidsArray[i].enable) {
+					asteroidsArray[i].Tx += asteroidsArray[i].xStep;
+					asteroidsArray[i].Ty += asteroidsArray[i].yStep;
+				}
 			}
 		}
 	}

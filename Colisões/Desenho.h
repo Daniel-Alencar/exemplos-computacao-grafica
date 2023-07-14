@@ -164,17 +164,19 @@ void Desenha(void)
 			
 			// Desenha os asteroides
 			winCondition = true;
-			for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
-				if(asteroidsArray[i].enable) {
-					winCondition = false;
-					glLoadIdentity();
-					gluOrtho2D(-range, range, -range, range);
+			
+			for(int j = 0; j < ASTEROIDS_ARRAY_QUANTITY; j++) {
+				Object_transformation *asteroidsArray = asteroidsArraysArray[j];
 
-					if(true) {
+				for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
+					if(asteroidsArray[i].enable) {
+						winCondition = false;
+						glLoadIdentity();
+						gluOrtho2D(-range, range, -range, range);
+
 						glTranslatef(asteroidsArray[i].Tx, asteroidsArray[i].Ty, 0.0f);
 						DesenhaAsteroide(asteroidsArray[i].size);
 					}
-
 				}
 			}
 			if(winCondition){

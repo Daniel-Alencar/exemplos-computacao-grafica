@@ -5,8 +5,6 @@ double convertDegreesToRadians(double degrees) {
 }
 
 float generateRandomFloat() {
-	srand(time(NULL));
-
 	float random = ((float)rand() / RAND_MAX);
 	return random;
 }
