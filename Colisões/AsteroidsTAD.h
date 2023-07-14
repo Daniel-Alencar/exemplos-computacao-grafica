@@ -1,4 +1,9 @@
 #include "Structs.h"
+#define ASTEROIDS_ARRAY_QUANTITY 3
+
+Object_transformation **asteroidsArraysArray = (Object_transformation**) malloc(
+  sizeof(Object_transformation*) * ASTEROIDS_ARRAY_QUANTITY
+);
 
 int ASTEROIDS_DEEP_LEVEL = 4;
 int ASTEROIDS_LENGTH_ARRAY = (int) pow(2, ASTEROIDS_DEEP_LEVEL) - 1;
@@ -62,8 +67,3 @@ Object_transformation* divideAsteroid(int asteroidIndex, Object_transformation *
 
   return asteroidsArray;
 }
-
-#define ASTEROIDS_ARRAY_QUANTITY 3
-Object_transformation **asteroidsArraysArray = (Object_transformation**) malloc(
-  sizeof(Object_transformation*) * ASTEROIDS_ARRAY_QUANTITY
-);

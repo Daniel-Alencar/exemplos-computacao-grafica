@@ -31,7 +31,7 @@ void Teclado (unsigned char key, int x, int y)
 	}
 
 	if(scene != SCENE_START) {
-		if(key == 'w' || key == 'W') {
+		if(key == 'w' || key == 'W' || key == GLUT_KEY_PAGE_UP) {
 			// Lógica para mover para "cima"
 			spaceship.xStep += 
 				+cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE))
@@ -98,5 +98,38 @@ void Teclado (unsigned char key, int x, int y)
 
 // Função callback chamada para gerenciar eventos de teclas especiais
 void TeclasEspeciais(int key, int x, int y) {
+
+	switch (key) {
+		case GLUT_KEY_UP:
+			// Lógica para mover para "cima"
+			spaceship.xStep += 
+				+cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE))
+				*SPACESHIP_ACCELERATION;
+			spaceship.yStep += 
+				+sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+				*SPACESHIP_ACCELERATION;
+			spaceshipWithAcceleration = true;	
+			break;
+
+		case GLUT_KEY_DOWN:
+			// Lógica para mover para "baixo"
+			spaceship.xStep += 
+				-cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+				*SPACESHIP_ACCELERATION;
+			spaceship.yStep += 
+				-sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+				*SPACESHIP_ACCELERATION;
+			break;
+		
+			case GLUT_KEY_LEFT:
+				// Lógica para mover para a esquerda
+				spaceship.angle+=SPACESHIP_ANGLE_STEP;
+				break;
+
+			case GLUT_KEY_RIGHT:
+				// Lógica para mover para a direita
+				spaceship.angle-=SPACESHIP_ANGLE_STEP;	
+				break;
+	}
 	glutPostRedisplay();
 }
