@@ -90,7 +90,7 @@ void draw() {
 					printf("Bala colidiu!\n");
 					bulletExists = false;
 
-					divideAsteroid(i);
+					divideAsteroid(i, asteroidsArray);
 				}
 				if(spaceshipCollision) {
 					updateLives();

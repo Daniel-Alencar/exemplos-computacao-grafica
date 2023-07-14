@@ -1,16 +1,10 @@
 #include "Structs.h"
 
-int asteroidsDeepLevel = 4;
+int ASTEROIDS_DEEP_LEVEL = 4;
+int ASTEROIDS_LENGTH_ARRAY = (int) pow(2, ASTEROIDS_DEEP_LEVEL) - 1;
 
-int ASTEROIDS_LENGTH_ARRAY = (int) pow(2, asteroidsDeepLevel) - 1;
 Object_transformation *asteroidsArray = 
 (Object_transformation*) malloc(sizeof(Object_transformation) * ASTEROIDS_LENGTH_ARRAY);
-
-void clearAsteroidsEnables() {
-	for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
-		asteroidsArray[i].enable = false;
-	}
-}
 
 int getLeftChildrenIndex(int asteroidIndex) {
 	asteroidIndex += 1;
@@ -22,7 +16,7 @@ int getRightChildrenIndex(int asteroidIndex) {
 	return asteroidIndex * 2;
 }
 
-void divideAsteroid(int asteroidIndex) {
+void divideAsteroid(int asteroidIndex, Object_transformation *asteroidsArray) {
 
 	int left = getLeftChildrenIndex(asteroidIndex);
 	int right = getRightChildrenIndex(asteroidIndex);
@@ -60,3 +54,8 @@ void divideAsteroid(int asteroidIndex) {
 	}
 
 }
+
+#define ASTEROIDS_ARRAY_QUANTITY 1
+Object_transformation **asteroidsArraysArray = (Object_transformation**) malloc(
+  sizeof(Object_transformation*) * ASTEROIDS_ARRAY_QUANTITY
+);

@@ -33,6 +33,7 @@ typedef struct {
 	GLfloat Tx, Ty;
 	GLfloat xStep, yStep;
 	GLfloat minX, minY, maxX, maxY;
+	int size = 1;
 
 } Object_transformation;
 

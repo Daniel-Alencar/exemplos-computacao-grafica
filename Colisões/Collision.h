@@ -89,17 +89,20 @@ bool verifySpaceshipCollision(
 	for(int i = 0; i < POINTS_SPACESHIP; i++) {
 		for(int j = 0; j < POINTS_ASTEROID; j++) {
 			Point nave_point1 = { 
-				pointsNave[i].x + spaceship.Tx, pointsNave[i].y + spaceship.Ty 
+				pointsNave[i].x + spaceship.Tx, 
+				pointsNave[i].y + spaceship.Ty 
 			};
 			Point nave_point2 = { 
-				pointsNave[(i+1)%3].x + spaceship.Tx, pointsNave[(i+1)%3].y + spaceship.Ty 
+				pointsNave[(i+1)%3].x + spaceship.Tx, 
+				pointsNave[(i+1)%3].y + spaceship.Ty 
 			};
 			Point asteroid_point1 = { 
-				pointsAsteroid[j].x + asteroid.Tx, pointsAsteroid[j].y + asteroid.Ty 
+				pointsAsteroid[j].x / asteroid.size + asteroid.Tx, 
+				pointsAsteroid[j].y / asteroid.size + asteroid.Ty 
 			};
 			Point asteroid_point2 = { 
-				pointsAsteroid[(j+1)%POINTS_ASTEROID].x + asteroid.Tx, 
-				pointsAsteroid[(j+1)%POINTS_ASTEROID].y + asteroid.Ty 
+				pointsAsteroid[(j+1)%POINTS_ASTEROID].x / asteroid.size + asteroid.Tx, 
+				pointsAsteroid[(j+1)%POINTS_ASTEROID].y / asteroid.size + asteroid.Ty 
 			};
 
 			if(doIntersect(
@@ -120,11 +123,12 @@ bool verifyBulletCollision(
 	if(bulletExists){
 		for(int j = 0; j < POINTS_ASTEROID; j++) {
 			Point asteroid_point1 = { 
-				pointsAsteroid[j].x + asteroid.Tx, pointsAsteroid[j].y + asteroid.Ty 
+				pointsAsteroid[j].x / asteroid.size + asteroid.Tx, 
+				pointsAsteroid[j].y / asteroid.size + asteroid.Ty 
 			};
 			Point asteroid_point2 = { 
-				pointsAsteroid[(j+1)%POINTS_ASTEROID].x + asteroid.Tx,
-				pointsAsteroid[(j+1)%POINTS_ASTEROID].y + asteroid.Ty 
+				pointsAsteroid[(j+1)%POINTS_ASTEROID].x / asteroid.size + asteroid.Tx,
+				pointsAsteroid[(j+1)%POINTS_ASTEROID].y / asteroid.size + asteroid.Ty 
 			};
 
 			Point bulletPoint1 = {bullet.Tx, bullet.Ty};

@@ -79,6 +79,11 @@ void Inicializa (void)
 	spaceship.maxY = +7.0f;
 
 	// Variáveis do asteróide
+	for(int i = 0; i < ASTEROIDS_ARRAY_QUANTITY; i++) {
+		asteroidsArraysArray[i] = (Object_transformation*) malloc(
+			sizeof(Object_transformation) * ASTEROIDS_LENGTH_ARRAY
+		);
+	}
 	
 	asteroidsArray[0].enable = true;
 	asteroidsArray[0].angle = generateRandomFloat() * 360;
@@ -92,6 +97,11 @@ void Inicializa (void)
 	asteroidsArray[0].maxX = +7.0f;
 	asteroidsArray[0].minY = -7.0f;
 	asteroidsArray[0].maxY = +7.0f;
+
+	for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
+		int size = handleSize(i);
+		asteroidsArray[i].size = size;
+	}
 
 	// Variáveis da bala
 	bullet.xStep = bullet.yStep = 0.00f;

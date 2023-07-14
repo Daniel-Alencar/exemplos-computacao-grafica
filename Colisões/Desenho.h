@@ -171,14 +171,8 @@ void Desenha(void)
 					gluOrtho2D(-range, range, -range, range);
 
 					if(true) {
-						int size = handleSize(i);
 						glTranslatef(asteroidsArray[i].Tx, asteroidsArray[i].Ty, 0.0f);
-						DesenhaAsteroide(size);
-						
-						glLoadIdentity();
-					} else {
-						glTranslatef(asteroidsArray[i].Tx, asteroidsArray[i].Ty, 0.0f);
-						DesenhaAsteroide(1);
+						DesenhaAsteroide(asteroidsArray[i].size);
 					}
 
 				}
