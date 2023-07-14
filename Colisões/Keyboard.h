@@ -39,6 +39,7 @@ void Teclado (unsigned char key, int x, int y)
 			spaceship.yStep += 
 				+sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
 				*SPACESHIP_ACCELERATION;
+			spaceshipWithAcceleration = true;
 		}
 		if(key == 'a' || key == 'A') {
 			// Lógica para mover para a esquerda

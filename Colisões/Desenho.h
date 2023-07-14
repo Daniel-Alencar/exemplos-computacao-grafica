@@ -15,6 +15,28 @@ void DesenhaNave()
 		glVertex2f(pointsNave[0].x, pointsNave[0].y);
 		glVertex2f(pointsNave[1].x, pointsNave[1].y);
 		glVertex2f(pointsNave[2].x, pointsNave[2].y);
+		glVertex2f(pointsNave[3].x, pointsNave[3].y);
+		glVertex2f(pointsNave[4].x, pointsNave[4].y);
+		glVertex2f(pointsNave[5].x, pointsNave[5].y);
+		glVertex2f(pointsNave[6].x, pointsNave[6].y);
+	glEnd();
+	glPointSize(1);
+	glBegin(GL_POINTS);
+		glVertex2i(0,0);      
+	glEnd();
+	glLineWidth(2);
+}
+
+void DesenhaFogo() {
+	Point p1_fogo = {+0.0, -2.0};
+	Point p2_fogo = {+0.4, -1.0};
+	Point p3_fogo = {-0.4, -1.0};
+
+	glLineWidth(2);
+	glBegin(GL_LINE_LOOP);
+		glVertex2f(p1_fogo.x, p1_fogo.y);
+		glVertex2f(p2_fogo.x, p2_fogo.y);
+		glVertex2f(p3_fogo.x, p3_fogo.y);
 	glEnd();
 	glPointSize(1);
 	glBegin(GL_POINTS);
@@ -118,11 +140,17 @@ void Desenha(void)
 			glTranslatef(spaceship.Tx, spaceship.Ty, 0.0f);
 
 			// Desenha uma rotação sobre a Nave
-			glTranslatef(0.0f,0.0f,0.0f);
 			glRotatef(spaceship.angle,0.0f,0.0f,1.0f);
-			glTranslatef(0.0f,0.0f,0.0f);
 
 			DesenhaNave();
+			if(spaceshipWithAcceleration) {
+				glLoadIdentity();
+				gluOrtho2D(-range, range, -range, range);
+
+				glTranslatef(spaceship.Tx, spaceship.Ty, 0.0f);
+				glRotatef(spaceship.angle,0.0f,0.0f,1.0f);
+				DesenhaFogo();
+			}
 
 			// Inicializa a matriz de transformação corrente
 			glLoadIdentity();

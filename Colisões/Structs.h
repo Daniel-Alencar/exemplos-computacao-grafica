@@ -1,7 +1,7 @@
 #include <GL/glut.h>
 
 // Pontos de desenho
-#define POINTS_SPACESHIP 3
+#define POINTS_SPACESHIP 7
 #define POINTS_ASTEROID 10
 
 // Cenas
@@ -17,7 +17,8 @@
 
 #define SPACESHIP_ACCELERATION 0.005f
 #define SPACESHIP_OFFSET_ANGLE 90
-#define SPACESHIP_ANGLE_STEP 8
+#define SPACESHIP_ANGLE_STEP 12
+#define SPACESHIP_DESACCELERATION_FACTOR 1.003f
 
 #define BULLET_SPEED 0.030f
 
@@ -56,6 +57,7 @@ GLfloat windowYmin, windowYmax;
 bool bulletExists = false;
 Object_transformation bullet;
 Object_transformation spaceship;
+bool spaceshipWithAcceleration = false;
 
 
 Point pointsNave[POINTS_SPACESHIP];
@@ -72,62 +74,3 @@ int currentColor = 0;
 float redValue = 1.0f;
 float greenValue = 1.0f;
 float blueValue = 1.0f;
-
-// Asteroids TAD
-#define ASTEROIDS_LENGTH_ARRAY 7
-Object_transformation asteroidsArray[ASTEROIDS_LENGTH_ARRAY];
-
-void clearAsteroidsEnables() {
-	for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
-		asteroidsArray[i].enable = false;
-	}
-}
-
-int getLeftChildrenIndex(int asteroidIndex) {
-	asteroidIndex += 1;
-	return asteroidIndex * 2 - 1;
-}
-
-int getRightChildrenIndex(int asteroidIndex) {
-	asteroidIndex += 1;
-	return asteroidIndex * 2;
-}
-
-void divideAsteroid(int asteroidIndex) {
-
-	int left = getLeftChildrenIndex(asteroidIndex);
-	int right = getRightChildrenIndex(asteroidIndex);
-	printf("Left: %d e Right: %d\n", left, right);
-
-	// Habilitando/Desabilitando asteroides
-	asteroidsArray[asteroidIndex].enable = false;
-
-	if(left < ASTEROIDS_LENGTH_ARRAY) {
-		asteroidsArray[left].enable = true;
-		// Setando posições para o filho esquerdo
-		asteroidsArray[left].angle = asteroidsArray[asteroidIndex].angle + 30;
-		asteroidsArray[left].Tx = asteroidsArray[asteroidIndex].Tx;
-		asteroidsArray[left].Ty = asteroidsArray[asteroidIndex].Ty;
-		asteroidsArray[left].xStep = cos(
-			convertDegreesToRadians(asteroidsArray[left].angle)
-		) * ASTEROID_VELOCITY;
-		asteroidsArray[left].yStep = sin(
-			convertDegreesToRadians(asteroidsArray[left].angle)
-		) * ASTEROID_VELOCITY;
-	}
-
-	if(right < ASTEROIDS_LENGTH_ARRAY) {
-		asteroidsArray[right].enable = true;
-		// Setando posições para o filho direito
-		asteroidsArray[right].angle = asteroidsArray[asteroidIndex].angle - 30;
-		asteroidsArray[right].Tx = asteroidsArray[asteroidIndex].Tx;
-		asteroidsArray[right].Ty = asteroidsArray[asteroidIndex].Ty;
-		asteroidsArray[right].xStep = cos(
-			convertDegreesToRadians(asteroidsArray[right].angle)
-		) * ASTEROID_VELOCITY;
-		asteroidsArray[right].yStep = sin(
-			convertDegreesToRadians(asteroidsArray[right].angle)
-		) * ASTEROID_VELOCITY;
-	}
-
-}

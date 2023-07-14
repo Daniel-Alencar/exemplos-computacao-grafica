@@ -9,7 +9,7 @@
 #include <math.h>
 
 #include "Util.h"
-#include "Structs.h"
+#include "AsteroidsTAD.h"
 #include "Menu.h"
 #include "Desenho.h"
 #include "Collision.h"
@@ -25,10 +25,21 @@ void Inicializa (void)
 	// Pontos de desenho
 	Point p1_nave = {+0.0, +1.5};
 	Point p2_nave = {+1.0, -1.0};
-	Point p3_nave = {-1.0, -1.0};
+	Point p3_nave = {+1.3, -2.0};
+	Point p4_nave = {+1.0, -1.0};
+	Point p5_nave = {-1.0, -1.0};
+	Point p6_nave = {-1.3, -2.0};
+	Point p7_nave = {-1.0, -1.0};
+
 	pointsNave[0] = p1_nave;
 	pointsNave[1] = p2_nave;
 	pointsNave[2] = p3_nave;
+	pointsNave[3] = p4_nave;
+	pointsNave[4] = p5_nave;
+	pointsNave[5] = p6_nave;
+	pointsNave[6] = p7_nave;
+
+
 
 	float dimension1 = 2.1875;
 	float dimension2 = 4.375;

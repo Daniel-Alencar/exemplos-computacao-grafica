@@ -99,8 +99,6 @@ void draw() {
 
 			}
 		}
-		
-		
 	}
 
   // Movimentando objetos
@@ -115,6 +113,12 @@ void draw() {
     // Move a Nave
     spaceship.Tx += spaceship.xStep;
     spaceship.Ty += spaceship.yStep;
+		spaceship.xStep /= SPACESHIP_DESACCELERATION_FACTOR;
+		spaceship.yStep /= SPACESHIP_DESACCELERATION_FACTOR;
+
+		if(abs(spaceship.xStep) < 0.01f && abs(spaceship.yStep < 0.01f)) {
+			spaceshipWithAcceleration = false;
+		}
 
     // Move os Asteroids
 		for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) { 
