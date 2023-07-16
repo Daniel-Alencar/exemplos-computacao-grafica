@@ -36,8 +36,23 @@ void pressRightArrow() {
 	spaceship.angle-=SPACESHIP_ANGLE_STEP;
 }
 
+void updateMovesWithPressedKeys() {
+	if(keyUpPressed) {
+		pressUpArrow();
+	}
+	if(keyDownPressed) {
+		pressDownArrow();
+	}
+	if(keyLeftPressed) {
+		pressLeftArrow();
+	}
+	if(keyRightPressed) {
+		pressRightArrow();
+	}
+}
+
 // Função callback chamada para gerenciar eventos de teclas
-void Teclado (unsigned char key, int x, int y)
+void keyboardPressed(unsigned char key, int x, int y)
 {
 	if (key == 27) {
 		if (scene == SCENE_MENU){
@@ -69,16 +84,16 @@ void Teclado (unsigned char key, int x, int y)
 
 	if(scene != SCENE_START) {
 		if(key == 'w' || key == 'W') {
-			pressUpArrow();
+			keyUpPressed = true;
 		}
 		if(key == 'a' || key == 'A') {
-			pressLeftArrow();
+			keyLeftPressed = true;
 		}
 		if(key == 's' || key == 'S') {
-			pressDownArrow();
+			keyDownPressed = true;
 		}
 		if(key == 'd' || key == 'D') {
-			pressRightArrow();
+			keyRightPressed = true;
 		}
 	}
 
@@ -118,27 +133,41 @@ void Teclado (unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
+void keyboardDespressed(unsigned char key, int x, int y) {
+	if(key == 'w' || key == 'W') {
+		keyUpPressed = false;
+	}
+	if(key == 'a' || key == 'A') {
+		keyLeftPressed = false;
+	}
+	if(key == 's' || key == 'S') {
+		keyDownPressed = false;
+	}
+	if(key == 'd' || key == 'D') {
+		keyRightPressed = false;
+	}
+}
+
 // Função callback chamada para gerenciar eventos de teclas especiais
 void specialKeyDownCallback(int key, int x, int y) {
-
 	switch (key) {
 		case GLUT_KEY_UP:
-			pressUpArrow();
+			// Tecla para cima pressionada
+			keyUpPressed = true;
 			break;
-
 		case GLUT_KEY_DOWN:
-			pressDownArrow();
+			// Tecla para baixo pressionada
+			keyDownPressed = true;
 			break;
-		
 		case GLUT_KEY_LEFT:
-			pressLeftArrow();
+			// Tecla para esquerda pressionada
+			keyLeftPressed = true;
 			break;
-
 		case GLUT_KEY_RIGHT:
-			pressRightArrow();
+			// Tecla para direita pressionada
+			keyRightPressed = true;
 			break;
 	}
-	glutPostRedisplay();
 }
 
 // Função callback chamada para gerenciar eventos de teclas especiais

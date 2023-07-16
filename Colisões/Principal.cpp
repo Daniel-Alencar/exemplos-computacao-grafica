@@ -194,10 +194,12 @@ int main(int argc, char** argv)
 	glutDisplayFunc(Desenha);  
 	
 	// Registra a função callback de redimensionamento da janela de visualização
-	
+
 
 	// Registra a função callback para tratamento das teclas ASCII
-	glutKeyboardFunc(Teclado);
+	glutKeyboardFunc(keyboardPressed);
+	// Registra a função callback para tratamento das teclas ASCII
+	glutKeyboardUpFunc(keyboardDespressed);
 	// Registra a função callback para tratamento das teclas especiais
 	glutSpecialFunc(specialKeyDownCallback);
 	// Registra a função callback para tratamento das teclas especiais

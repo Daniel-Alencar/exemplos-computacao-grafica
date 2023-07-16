@@ -61,6 +61,7 @@ void updateLives(){
 }
 
 void draw() {
+
 	// Nave nas bordas da tela
 	spaceship = changeSpaceshipTranslation(spaceship);
 
@@ -77,6 +78,8 @@ void draw() {
   
   // Verificando colisões
 	if(scene == SCENE_GAME) {
+		// Verificar pressionamento de teclas
+		updateMovesWithPressedKeys();
 
 		for(int j = 0; j < ASTEROIDS_ARRAY_QUANTITY; j++) {
 			Object_transformation *asteroidsArray = asteroidsArraysArray[j];
