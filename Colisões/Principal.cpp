@@ -131,34 +131,8 @@ void Inicializa (void)
 }
 
 // Função callback chamada quando o tamanho da janela é alterado 
-void AlteraTamanhoJanela(GLsizei w, GLsizei h)
-{
-	GLsizei largura, altura;
-                   
-	// Evita a divisao por zero
-	if(h == 0) h = 1;
+void AlteraTamanhoJanela(GLsizei w, GLsizei h) {
 
-	// Atualiza as variáveis
-	largura = w;
-	altura = h;
-                                              
-	// Especifica as dimensões da Viewport
-	glViewport(0, 0, largura, altura);
-
-	// Inicializa o sistema de coordenadas
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	// Estabelece a janela de seleção
-	// (esquerda, direita, inferior, superior)
-	// mantendo a proporção com a janela de visualização
-	if (largura <= altura) { 
-		gluOrtho2D (-25.0f, 25.0f, -25.0f*altura/largura, 25.0f*altura/largura);
-		win = 25.0f;
-	} else { 
-		gluOrtho2D (-25.0f*largura/altura, 25.0f*largura/altura, -25.0f, 25.0f);
-		win = 25.0f*largura/altura;           
-	}             
 }
 
 // Função callback chamada pela GLUT a cada intervalo de tempo
@@ -194,7 +168,7 @@ int main(int argc, char** argv)
 	glutDisplayFunc(Desenha);  
 	
 	// Registra a função callback de redimensionamento da janela de visualização
-
+	glutReshapeFunc(AlteraTamanhoJanela);
 
 	// Registra a função callback para tratamento das teclas ASCII
 	glutKeyboardFunc(keyboardPressed);
