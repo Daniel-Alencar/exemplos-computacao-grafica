@@ -144,11 +144,6 @@ void Desenha(void)
 
 			DesenhaNave();
 			if(spaceshipWithAcceleration) {
-				glLoadIdentity();
-				gluOrtho2D(-range, range, -range, range);
-
-				glTranslatef(spaceship.Tx, spaceship.Ty, 0.0f);
-				glRotatef(spaceship.angle,0.0f,0.0f,1.0f);
 				DesenhaFogo();
 			}
 

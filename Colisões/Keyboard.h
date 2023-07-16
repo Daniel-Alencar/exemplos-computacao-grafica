@@ -1,4 +1,41 @@
 
+// Variáveis para controlar o estado das teclas
+bool keyUpPressed = false;
+bool keyDownPressed = false;
+bool keyLeftPressed = false;
+bool keyRightPressed = false;
+
+void pressUpArrow() {
+	// Lógica para mover para "cima"
+	spaceship.xStep += 
+		+cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE))
+		*SPACESHIP_ACCELERATION;
+	spaceship.yStep += 
+		+sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+		*SPACESHIP_ACCELERATION;
+	spaceshipWithAcceleration = true;
+}
+
+void pressDownArrow() {
+	// Lógica para mover para "baixo"
+	spaceship.xStep += 
+		-cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+		*SPACESHIP_ACCELERATION;
+	spaceship.yStep += 
+		-sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
+		*SPACESHIP_ACCELERATION;
+}
+
+void pressLeftArrow() {
+	// Lógica para mover para a esquerda
+	spaceship.angle+=SPACESHIP_ANGLE_STEP;
+}
+
+void pressRightArrow() {
+	// Lógica para mover para a direita
+	spaceship.angle-=SPACESHIP_ANGLE_STEP;
+}
+
 // Função callback chamada para gerenciar eventos de teclas
 void Teclado (unsigned char key, int x, int y)
 {
@@ -31,32 +68,17 @@ void Teclado (unsigned char key, int x, int y)
 	}
 
 	if(scene != SCENE_START) {
-		if(key == 'w' || key == 'W' || key == GLUT_KEY_PAGE_UP) {
-			// Lógica para mover para "cima"
-			spaceship.xStep += 
-				+cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE))
-				*SPACESHIP_ACCELERATION;
-			spaceship.yStep += 
-				+sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
-				*SPACESHIP_ACCELERATION;
-			spaceshipWithAcceleration = true;
+		if(key == 'w' || key == 'W') {
+			pressUpArrow();
 		}
 		if(key == 'a' || key == 'A') {
-			// Lógica para mover para a esquerda
-			spaceship.angle+=SPACESHIP_ANGLE_STEP;
+			pressLeftArrow();
 		}
 		if(key == 's' || key == 'S') {
-			// Lógica para mover para "baixo"
-			spaceship.xStep += 
-				-cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
-				*SPACESHIP_ACCELERATION;
-			spaceship.yStep += 
-				-sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
-				*SPACESHIP_ACCELERATION;
+			pressDownArrow();
 		}
 		if(key == 'd' || key == 'D') {
-			// Lógica para mover para a direita
-			spaceship.angle-=SPACESHIP_ANGLE_STEP;
+			pressRightArrow();
 		}
 	}
 
@@ -97,39 +119,46 @@ void Teclado (unsigned char key, int x, int y)
 }
 
 // Função callback chamada para gerenciar eventos de teclas especiais
-void TeclasEspeciais(int key, int x, int y) {
+void specialKeyDownCallback(int key, int x, int y) {
 
 	switch (key) {
 		case GLUT_KEY_UP:
-			// Lógica para mover para "cima"
-			spaceship.xStep += 
-				+cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE))
-				*SPACESHIP_ACCELERATION;
-			spaceship.yStep += 
-				+sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
-				*SPACESHIP_ACCELERATION;
-			spaceshipWithAcceleration = true;	
+			pressUpArrow();
 			break;
 
 		case GLUT_KEY_DOWN:
-			// Lógica para mover para "baixo"
-			spaceship.xStep += 
-				-cos(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
-				*SPACESHIP_ACCELERATION;
-			spaceship.yStep += 
-				-sin(convertDegreesToRadians(spaceship.angle + SPACESHIP_OFFSET_ANGLE)) 
-				*SPACESHIP_ACCELERATION;
+			pressDownArrow();
 			break;
 		
-			case GLUT_KEY_LEFT:
-				// Lógica para mover para a esquerda
-				spaceship.angle+=SPACESHIP_ANGLE_STEP;
-				break;
+		case GLUT_KEY_LEFT:
+			pressLeftArrow();
+			break;
 
-			case GLUT_KEY_RIGHT:
-				// Lógica para mover para a direita
-				spaceship.angle-=SPACESHIP_ANGLE_STEP;	
-				break;
+		case GLUT_KEY_RIGHT:
+			pressRightArrow();
+			break;
 	}
 	glutPostRedisplay();
+}
+
+// Função callback chamada para gerenciar eventos de teclas especiais
+void specialKeyUpCallback(int key, int x, int y) {
+	switch (key) {
+		case GLUT_KEY_UP:
+			// Tecla para cima liberada
+			keyUpPressed = false;
+			break;
+		case GLUT_KEY_DOWN:
+			// Tecla para baixo liberada
+			keyDownPressed = false;
+			break;
+		case GLUT_KEY_LEFT:
+			// Tecla para esquerda liberada
+			keyLeftPressed = false;
+			break;
+		case GLUT_KEY_RIGHT:
+			// Tecla para direita liberada
+			keyRightPressed = false;
+			break;
+	}
 }

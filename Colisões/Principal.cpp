@@ -176,7 +176,7 @@ void Anima(int value)
   // após o tempo especificado.
 	// - Value: é um valor inteiro que é passado como argumento 
   // para a função de retorno de chamada.
-	glutTimerFunc(1, Anima, 1);
+	glutTimerFunc(1, Anima, 0);
 }
 
 // Programa Principal 
@@ -193,16 +193,18 @@ int main(int argc, char** argv)
 	// Registra a função callback de redesenho da janela de visualização
 	glutDisplayFunc(Desenha);  
 	
-	// Registra a função callback de redimensionamento da janela de visualização 
-
-	// Registra a função callback para tratamento das teclas especiais
-	glutSpecialFunc(TeclasEspeciais);
+	// Registra a função callback de redimensionamento da janela de visualização
+	
 
 	// Registra a função callback para tratamento das teclas ASCII
 	glutKeyboardFunc(Teclado);
+	// Registra a função callback para tratamento das teclas especiais
+	glutSpecialFunc(specialKeyDownCallback);
+	// Registra a função callback para tratamento das teclas especiais
+	glutSpecialUpFunc(specialKeyUpCallback);
 
   // Registra a função callback que será chamada a cada intervalo de tempo
-	glutTimerFunc(1, Anima, 1);
+	glutTimerFunc(1, Anima, 0);
 
 	// Chama a função responsável por fazer as inicializações 
 	Inicializa(); 
