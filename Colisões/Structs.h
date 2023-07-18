@@ -20,7 +20,7 @@
 #define SPACESHIP_ANGLE_STEP 0.5
 #define SPACESHIP_DESACCELERATION_FACTOR 1.003f
 
-#define BULLET_SPEED 0.030f
+#define BULLET_SPEED 0.003f
 
 typedef struct {
 	float x;
@@ -55,8 +55,9 @@ GLfloat windowXmin, windowXmax;
 GLfloat windowYmin, windowYmax;
 
 // Controle de objetos na tela
-bool bulletExists = false;
-Object_transformation bullet;
+int bulletsLength = 0;
+Object_transformation *bullets = NULL;
+
 Object_transformation spaceship;
 bool spaceshipWithAcceleration = false;
 
@@ -75,3 +76,21 @@ int currentColor = 0;
 float redValue = 1.0f;
 float greenValue = 1.0f;
 float blueValue = 1.0f;
+
+void addBullet() {
+	bullets = (Object_transformation*) realloc(
+		bullets,
+		sizeof(Object_transformation) * (bulletsLength + 1)
+	);
+
+	bullets[bulletsLength].enable = true;
+	bullets[bulletsLength].angle = spaceship.angle;
+
+	bullets[bulletsLength].Tx = spaceship.Tx;
+	bullets[bulletsLength].Ty = spaceship.Ty;
+
+	bullets[bulletsLength].xStep = spaceship.xStep;
+	bullets[bulletsLength].yStep = spaceship.yStep;
+
+	bulletsLength++;
+}

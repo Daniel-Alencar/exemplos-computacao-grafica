@@ -117,10 +117,6 @@ void Inicializa (void)
 		}
 	}
 
-	// Variáveis da bala
-	bullet.xStep = bullet.yStep = 0.00f;
-	bullet.Tx = bullet.Ty = 0.0f;
-
 	// Variáveis da tela
 	windowXmin = windowYmin = -40.0f;
 	windowXmax = windowYmax = +40.0f;

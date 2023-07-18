@@ -85,28 +85,33 @@ void draw() {
 			Object_transformation *asteroidsArray = asteroidsArraysArray[j];
 
 			for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
+
 				if(asteroidsArray[i].enable) {
-					
-					bulletColision = verifyBulletCollision(
-						asteroidsArray[i],
-						bullet
-					);
 					spaceshipCollision = verifySpaceshipCollision(
 						asteroidsArray[i],
 						spaceship
 					);
 
-					if(bulletColision) {
-						printf("Bala colidiu!\n");
-						bulletExists = false;
-
-						asteroidsArray = divideAsteroid(i, asteroidsArray);
-					}
 					if(spaceshipCollision) {
 						updateLives();
 						break;
 					}
 
+					for(int k = 0; k < bulletsLength; k++) {
+					
+						bulletColision = verifyBulletCollision(
+							asteroidsArray[i],
+							bullets[k]
+						);
+
+						if(bulletColision) {
+							printf("Bala colidiu!\n");
+							bullets[k].enable = false;
+
+							asteroidsArray = divideAsteroid(i, asteroidsArray);
+						}
+						
+					}
 				}
 			}
 		}
@@ -115,10 +120,15 @@ void draw() {
   // Movimentando objetos
 	if(scene == SCENE_START || scene == SCENE_GAME) {
 		
-    // Move a bala
-		if(bulletExists) {
-			bullet.Tx += bullet.xStep;
-			bullet.Ty += bullet.yStep;
+    // Move as balas
+		for(int i = 0; i < bulletsLength; i++) {
+			if(bullets[i].enable) {
+				printf("TX da bala: %f e TY da bala: %f\n", bullets[i].Tx, bullets[i].Ty);
+
+				bullets[i].Tx += bullets[i].xStep;
+				bullets[i].Ty += bullets[i].yStep;
+
+			}
 		}
 
     // Move a Nave

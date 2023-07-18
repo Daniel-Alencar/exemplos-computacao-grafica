@@ -120,7 +120,7 @@ bool verifyBulletCollision(
 	Object_transformation asteroid,
 	Object_transformation bullet
 ) {
-	if(bulletExists){
+	if(bullet.enable){
 		for(int j = 0; j < POINTS_ASTEROID; j++) {
 			Point asteroid_point1 = { 
 				pointsAsteroid[j].x / asteroid.size + asteroid.Tx, 

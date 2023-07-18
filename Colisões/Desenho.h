@@ -152,9 +152,12 @@ void Desenha(void)
 			gluOrtho2D(-range, range, -range, range);
 
 			// Aplica uma translação sobre a bala
-			glTranslatef(bullet.Tx, bullet.Ty, 0.0f);
-			if(bulletExists) {
-			  DesenhaBala();
+			for(int i = 0; i < bulletsLength; i++) {
+				if(bullets[i].enable) {
+					glLoadIdentity();
+					glTranslatef(bullets[i].Tx, bullets[i].Ty, 0.0f);
+					DesenhaBala();
+				}
 			}
 			
 			// Desenha os asteroides

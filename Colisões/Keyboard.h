@@ -62,24 +62,13 @@ void keyboardPressed(unsigned char key, int x, int y)
 		}
 	}
 	if(key == ' ') {
+		if (scene == SCENE_GAME) {
+			printf("Atirou!\n");
+			addBullet();
+		}
 		if (scene == SCENE_START){
 			scene = SCENE_GAME;
 		}
-
-		bulletExists = true;
-
-		bullet.Tx = spaceship.Tx;
-		bullet.Ty = spaceship.Ty;
-
-		// Tiro
-		bullet.xStep = cos(convertDegreesToRadians(
-			spaceship.angle + SPACESHIP_OFFSET_ANGLE
-		)) * BULLET_SPEED;
-		bullet.yStep = sin(convertDegreesToRadians(
-			spaceship.angle + SPACESHIP_OFFSET_ANGLE
-		)) * BULLET_SPEED;
-
-		printf("Atirou!\n");
 	}
 
 	if(scene != SCENE_START) {
