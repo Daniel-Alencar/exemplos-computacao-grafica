@@ -86,11 +86,11 @@ void addBullet() {
 	bullets[bulletsLength].enable = true;
 	bullets[bulletsLength].angle = spaceship.angle;
 
-	bullets[bulletsLength].Tx = spaceship.Tx;
-	bullets[bulletsLength].Ty = spaceship.Ty;
+	bullets[bulletsLength].Tx = 0;
+	bullets[bulletsLength].Ty = 0;
 
-	bullets[bulletsLength].xStep = spaceship.xStep;
-	bullets[bulletsLength].yStep = spaceship.yStep;
+	bullets[bulletsLength].xStep = 0.003f;
+	bullets[bulletsLength].yStep = 0.003f;
 
 	bulletsLength++;
 }
