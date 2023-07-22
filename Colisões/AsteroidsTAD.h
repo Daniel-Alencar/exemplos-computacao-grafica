@@ -1,5 +1,5 @@
 #include "Structs.h"
-#define ASTEROIDS_ARRAY_QUANTITY 3
+#define ASTEROIDS_ARRAY_QUANTITY 4
 
 Object_transformation **asteroidsArraysArray = (Object_transformation**) malloc(
   sizeof(Object_transformation*) * ASTEROIDS_ARRAY_QUANTITY
