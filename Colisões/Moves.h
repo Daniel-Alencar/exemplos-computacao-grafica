@@ -126,13 +126,10 @@ void draw() {
     // Move a bala
 		for(int i = 0; i < bulletsLength; i++) {
 			if(bullets[i].enable) {
-				if(
-					bullets[i].Tx > -range && bullets[i].Tx < +range &&
-					bullets[i].Ty > -range && bullets[i].Ty < +range
-				) {
+
+				if(isObjectInScreen(bullets[i])) {
 					bullets[i].Tx += bullets[i].xStep;
 					bullets[i].Ty += bullets[i].yStep;
-
 				} else {
 					bullets[i].enable = false;
 				}

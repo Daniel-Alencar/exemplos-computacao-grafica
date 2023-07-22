@@ -21,6 +21,8 @@
 #define SPACESHIP_DESACCELERATION_FACTOR 1.003f
 
 #define BULLET_SPEED 0.030f
+#define BULLETS_MAXIMUM_QUANTITY 20
+#define DELAY_FOR_SHOOT 0.3
 
 typedef struct {
 	float x;
@@ -54,16 +56,13 @@ int range = 25;
 GLfloat windowXmin, windowXmax;
 GLfloat windowYmin, windowYmax;
 
-int bulletsLength = 0;
 // Controle de objetos na tela
 Object_transformation *bullets = NULL;
+int bulletsLength = 0;
 float spaceshipShootTime = 0;
-float delayTimeShoot = 0.3;
-
 
 Object_transformation spaceship;
 bool spaceshipWithAcceleration = false;
-
 
 Point pointsNave[POINTS_SPACESHIP];
 Point pointsAsteroid[POINTS_ASTEROID];
@@ -79,3 +78,10 @@ int currentColor = 0;
 float redValue = 1.0f;
 float greenValue = 1.0f;
 float blueValue = 1.0f;
+
+bool isObjectInScreen(Object_transformation object) {
+	return (
+		object.Tx > -range && object.Tx < +range && 
+		object.Ty > -range && object.Ty < +range
+	);
+}
