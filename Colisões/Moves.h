@@ -87,10 +87,18 @@ void draw() {
 			for(int i = 0; i < ASTEROIDS_LENGTH_ARRAY; i++) {
 				if(asteroidsArray[i].enable) {
 					
-					bulletColision = verifyBulletCollision(
-						asteroidsArray[i],
-						bullet
-					);
+					int k;
+					for(k = 0; k < bulletsLength; k++) {
+						bulletColision = verifyBulletCollision(
+							asteroidsArray[i],
+							bullets[k]
+						);
+
+						if(bulletColision) {
+							break;
+						}
+					}
+					
 					spaceshipCollision = verifySpaceshipCollision(
 						asteroidsArray[i],
 						spaceship
@@ -98,7 +106,7 @@ void draw() {
 
 					if(bulletColision) {
 						printf("Bala colidiu!\n");
-						bulletExists = false;
+						bullets[k].enable = false;
 
 						asteroidsArray = divideAsteroid(i, asteroidsArray);
 					}
@@ -116,9 +124,19 @@ void draw() {
 	if(scene == SCENE_START || scene == SCENE_GAME) {
 		
     // Move a bala
-		if(bulletExists) {
-			bullet.Tx += bullet.xStep;
-			bullet.Ty += bullet.yStep;
+		for(int i = 0; i < bulletsLength; i++) {
+			if(bullets[i].enable) {
+				if(
+					bullets[i].Tx > -range && bullets[i].Tx < +range &&
+					bullets[i].Ty > -range && bullets[i].Ty < +range
+				) {
+					bullets[i].Tx += bullets[i].xStep;
+					bullets[i].Ty += bullets[i].yStep;
+
+				} else {
+					bullets[i].enable = false;
+				}
+			}
 		}
 
     // Move a Nave

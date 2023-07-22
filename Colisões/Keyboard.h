@@ -66,20 +66,55 @@ void keyboardPressed(unsigned char key, int x, int y)
 			scene = SCENE_GAME;
 		}
 
-		bulletExists = true;
+		float currentTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+		printf("Current Time: %f\n", currentTime);
+		printf("Spaceship shoot Time: %f\n", spaceshipShootTime);
 
-		bullet.Tx = spaceship.Tx;
-		bullet.Ty = spaceship.Ty;
+		if(currentTime - spaceshipShootTime > delayTimeShoot) {
 
-		// Tiro
-		bullet.xStep = cos(convertDegreesToRadians(
-			spaceship.angle + SPACESHIP_OFFSET_ANGLE
-		)) * BULLET_SPEED;
-		bullet.yStep = sin(convertDegreesToRadians(
-			spaceship.angle + SPACESHIP_OFFSET_ANGLE
-		)) * BULLET_SPEED;
+			if(bulletsLength < 20) {
+				bulletsLength++;
 
-		printf("Atirou!\n");
+				bullets = (Object_transformation*) realloc(
+					bullets, sizeof(Object_transformation) * bulletsLength
+				);
+
+				bullets[bulletsLength - 1].enable = true;
+
+				bullets[bulletsLength - 1].Tx = spaceship.Tx;
+				bullets[bulletsLength - 1].Ty = spaceship.Ty;
+
+				// Tiro
+				bullets[bulletsLength - 1].xStep = cos(convertDegreesToRadians(
+					spaceship.angle + SPACESHIP_OFFSET_ANGLE
+				)) * BULLET_SPEED;
+				bullets[bulletsLength - 1].yStep = sin(convertDegreesToRadians(
+					spaceship.angle + SPACESHIP_OFFSET_ANGLE
+				)) * BULLET_SPEED;
+
+			} else {
+				for(int k = 0; k < bulletsLength; k++) {
+					if(bullets[k].enable == false) {
+
+						bullets[k].enable = true;
+						bullets[k].Tx = spaceship.Tx;
+						bullets[k].Ty = spaceship.Ty;
+
+						bullets[k].xStep = cos(convertDegreesToRadians(
+							spaceship.angle + SPACESHIP_OFFSET_ANGLE
+						)) * BULLET_SPEED;
+						bullets[k].yStep = sin(convertDegreesToRadians(
+							spaceship.angle + SPACESHIP_OFFSET_ANGLE
+						)) * BULLET_SPEED;
+
+						break;
+					}
+				}
+			}
+			spaceshipShootTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+			printf("Atirou!\n");
+			
+		}
 	}
 
 	if(scene != SCENE_START) {

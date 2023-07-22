@@ -54,9 +54,13 @@ int range = 25;
 GLfloat windowXmin, windowXmax;
 GLfloat windowYmin, windowYmax;
 
+int bulletsLength = 0;
 // Controle de objetos na tela
-bool bulletExists = false;
-Object_transformation bullet;
+Object_transformation *bullets = NULL;
+float spaceshipShootTime = 0;
+float delayTimeShoot = 0.3;
+
+
 Object_transformation spaceship;
 bool spaceshipWithAcceleration = false;
 

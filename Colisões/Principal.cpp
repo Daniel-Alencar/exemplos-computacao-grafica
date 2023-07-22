@@ -118,8 +118,6 @@ void Inicializa (void)
 	}
 
 	// Variáveis da bala
-	bullet.xStep = bullet.yStep = 0.00f;
-	bullet.Tx = bullet.Ty = 0.0f;
 
 	// Variáveis da tela
 	windowXmin = windowYmin = -40.0f;
@@ -178,6 +176,8 @@ int main(int argc, char** argv)
 	glutSpecialFunc(specialKeyDownCallback);
 	// Registra a função callback para tratamento das teclas especiais
 	glutSpecialUpFunc(specialKeyUpCallback);
+
+	// glutIdleFunc();
 
   // Registra a função callback que será chamada a cada intervalo de tempo
 	glutTimerFunc(1, Anima, 0);
